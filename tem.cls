@@ -190,9 +190,10 @@
 	\newcommand\temSetupHeaderFonts[4]{}%
 \fi\fi
 
-% 默认页眉字体: 宋体 + Times New Roman(若 fonts/ 无文件则走系统字体)
-% 提示: 你之后把 Windows 提取的字体放进 fonts/ 后, 只要文件名匹配即可自动启用.
-\temSetupHeaderFonts{SimSun.ttf}{SimSun}{Times New Roman.ttf}{Times New Roman}
+% 默认页眉字体: 宋体 + Times New Roman(优先 fonts/)
+% - 宋体: Windows 常见为 simsun.ttc
+% - Times New Roman: Windows 常见为 times.ttf
+\temSetupHeaderFonts{simsun.ttc}{SimSun}{times.ttf}{Times New Roman}
 
 \newcommand\tem@headerfont{%
 	\zihao{-5}% 小五
@@ -308,10 +309,44 @@
 \fi\fi
 
 % 预设字体族(找不到就 \relax)
-\temNewLatinFamilyWithFallback\tem@ArialLatin{Arial.ttf}{Arial}
-\temNewLatinFamilyWithFallback\tem@TimesLatin{Times New Roman.ttf}{Times New Roman}
-% Windows 常见文件名: simfang.ttf/simkai.ttf (若你提取后文件名不同, 之后可在这里改)
-\temNewCJKFamilyWithFallback\tem@SongCJK{SimSun.ttf}{SimSun}
+% 英文字体文件名按 Windows 常见: times.ttf / arial.ttf
+\temNewLatinFamilyWithFallback\tem@ArialLatin{arial.ttf}{Arial}
+\temNewLatinFamilyWithFallback\tem@TimesLatin{times.ttf}{Times New Roman}
+
+% 中文字体文件名按 Windows 常见: simsun.ttc / simhei.ttf / simkai.ttf
+% 宋体使用 ttc: 优先 fonts/simsun.ttc, 否则回退系统 SimSun
+\ifdefined\newCJKfontfamily
+	\IfFileExists{\tem@fontdir simsun.ttc}{%
+		\newCJKfontfamily\tem@SongCJK[Path=\tem@fontdir,FontIndex=0]{simsun.ttc}%
+	}{%
+		\IfFontExistsTF{SimSun}{%
+			\newCJKfontfamily\tem@SongCJK{SimSun}%
+		}{%
+			\let\tem@SongCJK\relax
+		}%
+	}%
+\else
+	\let\tem@SongCJK\relax
+\fi
+
+% 将 ctex 的常用字体族直接绑定到本地字体文件(若存在)
+% 这样 \songti/\heiti/\kaishu 等也会优先使用 fonts/ 字体.
+\ifdefined\setCJKmainfont
+	\IfFileExists{\tem@fontdir simsun.ttc}{%
+		\setCJKmainfont[Path=\tem@fontdir,FontIndex=0]{simsun.ttc}%
+	}{}%
+\fi
+\ifdefined\setCJKfamilyfont
+	\IfFileExists{\tem@fontdir simhei.ttf}{%
+		\setCJKfamilyfont{hei}[Path=\tem@fontdir]{simhei.ttf}%
+	}{}%
+	\IfFileExists{\tem@fontdir simkai.ttf}{%
+		\setCJKfamilyfont{kai}[Path=\tem@fontdir]{simkai.ttf}%
+	}{}%
+\fi
+
+\temNewCJKFamilyWithFallback\tem@HeiCJK{simhei.ttf}{SimHei}
+% Windows 常见文件名: simfang.ttf/simkai.ttf (仿宋可后续补)
 \temNewCJKFamilyWithFallback\tem@FangSongCJK{simfang.ttf}{FangSong}
 \temNewCJKFamilyWithFallback\tem@KaiTiCJK{simkai.ttf}{KaiTi}
 
@@ -446,7 +481,7 @@
 		\noindent\textbf{KEY WORDS:}~#1\par
 	\endgroup
 }
-% \hspace*{6pt}看着怪可以删掉,放在\noindent和\textbf之间.
+% 关键词段首空 6pt: \hspace*{6pt},放在 \noindent 后面.
 
 \newcommand\Zhabstract[1]{%
 	\par
@@ -462,6 +497,74 @@
 		\tem@ZhSmallFiveFont
 		\noindent\textbf{关键词:}#1\par
 	\endgroup
+}
+
+% 主标题节: \Mainsection{} 代替 \section{}
+% 规范:
+% - 标题(二级标题): 小四黑, 英文 Arial, 上下间距各 6pt
+% - 标题后的正文直到“下一个命令”出现前: 五号宋体/Times New Roman, 首行缩进 0.74cm,
+%   单倍行距; 尽量改善中文断行与公式导致的溢出
+\RequirePackage{etoolbox}
+\newif\iftem@maintextactive
+\newtoks\tem@MainSavedEverypar
+
+\newcommand\tem@MainTextParaSetup{%
+	\linespread{1}\selectfont
+	\zihao{5}% 五号
+	\ifx\tem@SongCJK\relax\songti\else\tem@SongCJK\fi
+	\ifx\tem@TimesLatin\relax\else\tem@TimesLatin\fi
+	\parindent=0.74cm\relax
+	\emergencystretch=1em\relax
+	\tolerance=2000\relax
+}
+
+\newcommand\temMainTextDeactivate{%
+	\iftem@maintextactive
+		\tem@maintextactivefalse
+		\everypar\expandafter{\the\tem@MainSavedEverypar}%
+	\fi
+}
+
+\newcommand\temMainTextActivate{%
+	\temMainTextDeactivate
+	\tem@maintextactivetrue
+	\tem@MainSavedEverypar=\everypar
+	\everypar{\tem@MainTextParaSetup\the\tem@MainSavedEverypar}%
+}
+
+% 常见结构命令出现时, 自动结束 Mainsection 正文样式
+\pretocmd{\subsection}{\temMainTextDeactivate}{}{}
+\pretocmd{\subsubsection}{\temMainTextDeactivate}{}{}
+\pretocmd{\paragraph}{\temMainTextDeactivate}{}{}
+\pretocmd{\subparagraph}{\temMainTextDeactivate}{}{}
+\pretocmd{\begin}{\temMainTextDeactivate}{}{}
+\pretocmd{\end}{\temMainTextDeactivate}{}{}
+\pretocmd{\item}{\temMainTextDeactivate}{}{}
+
+\newcommand\tem@MainsectionTitle[1]{%
+	\par\vspace{6pt}%
+	\noindent
+	{\zihao{-4}\heiti\ifx\tem@ArialLatin\relax\else\tem@ArialLatin\fi #1\par}%
+	\vspace{6pt}%
+}
+
+\newcommand\Mainsection{\@ifstar\tem@MainsectionStar\tem@Mainsection}
+
+\newcommand\tem@Mainsection[1]{%
+	\par
+	\temMainTextDeactivate
+	\refstepcounter{section}%
+	\setcounter{subsection}{0}%
+	\addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}%
+	\tem@MainsectionTitle{\thesection\quad #1}%
+	\temMainTextActivate
+}
+
+\newcommand\tem@MainsectionStar[1]{%
+	\par
+	\temMainTextDeactivate
+	\tem@MainsectionTitle{#1}%
+	\temMainTextActivate
 }
 
 % 算法(如需其他算法样式, 后续可在此扩展)

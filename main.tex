@@ -7,12 +7,12 @@
 % 例如: fonts/SimSun.ttf 和 fonts/Times New Roman.ttf
 
 \begin{document}
-\XtuTitleAuthorAddress{示例标题 Example Title}
+\XtuTitleAuthorAddress{一个很长很长很长很长很长很长很长的示例标题 A Long Long Long Example Title}
 {张三}
 {(傻逼大学)}
 {Example Title}
 {Zhang San}
-{Stupid University}
+{(Stupid University)}
 
 \Zhabstract{这里是中文摘要内容, 用于测试小五号宋体与 14pt 行距。}
 \Zhkeyword{关键词1; 关键词2; 关键词3}
@@ -20,8 +20,10 @@
 \Enkeyword{keyword1; keyword2; keyword3}
 
 
-\section{示例标题}
-\zhlipsum[1-4]
+\Mainsection{主标题示例 Main Section}
+这里是一段用于测试Mainsection正文样式的文字, 期望效果为五号, 中文宋体, 英文 Times New Roman, 首行缩进 0.74cm, 单倍行距. 同时测试含有数学公式的换行: 设 $E=mc^2$, 当公式与中文混排时也应能自动断行并尽量避免溢出.
+
+\zhlipsum[1-3]
 
 
 \subsection{代码}
