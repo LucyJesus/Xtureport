@@ -1,0 +1,37 @@
+\documentclass[twocolumn]{tem}
+\usepackage{zhlipsum}
+% 页眉示例: 左/中/右三段, 位置由 tem.cls 里的制表位控制
+\temSetHeaderContent{实验报告}{傻逼大学}{第\thepage 页}
+
+% 如果你把字体放到 fonts/ 下, 文件名匹配即可自动生效.
+% 例如: fonts/SimSun.ttf 和 fonts/Times New Roman.ttf
+
+\begin{document}
+\XtuTitleAuthorAddress{示例标题 Example Title}
+{张三}
+{(傻逼大学)}
+{Example Title}
+{Zhang San}
+{Stupid University}
+
+\Zhabstract{这里是中文摘要内容, 用于测试小五号宋体与 14pt 行距。}
+\Zhkeyword{关键词1; 关键词2; 关键词3}
+\Enabstract{This is an English abstract used to test 9pt Times New Roman with 14pt baseline skip.}
+\Enkeyword{keyword1; keyword2; keyword3}
+
+
+\section{示例标题}
+\zhlipsum[1-4]
+
+
+\subsection{代码}
+\begin{lstlisting}[language=Python]
+print('hello')
+\end{lstlisting}
+
+\subsection{算法}
+\begin{algorithm}
+\caption{示例算法}
+\end{algorithm}
+
+\end{document}
