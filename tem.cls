@@ -16,6 +16,31 @@
 % 图形
 \RequirePackage{graphicx}
 
+% 行距控制: 使用 setspace 的 \setstretch 来统一调整 \baselineskip
+% 说明: \linespread 也能工作, 但 setspace 在局部/全局控制上更直观,
+%      且便于按 Word 的“倍数行距”思路调整。
+\RequirePackage{setspace}
+
+% 数字分组(千分位/小数分组): 使用 siunitx
+% 需求: 123456789.987654 -> 123␠456␠789.987␠654
+% 这里用 0.25\ccwd 作为分组间距(约 1/4 中文字符宽度)。
+\RequirePackage{siunitx}
+\newcommand\tem@NumGroupSep{\kern0.25\ccwd}
+\sisetup{%
+	mode = text,
+	detect-all,
+	group-digits = all,
+	group-separator = {\tem@NumGroupSep},
+	group-minimum-digits = 4,
+	output-decimal-marker = {.}
+}
+\newcommand\XtuNum[1]{%
+	\begingroup
+	\ifx\tem@TimesLatin\relax\else\tem@TimesLatin\fi
+	\num{#1}%
+	\endgroup
+}
+
 % 版式
 \RequirePackage{geometry}
 \geometry{%
@@ -218,18 +243,28 @@
 
 % 进入文档后再计算版心, 保证 baselineskip/\ccwd 已就绪
 \AtBeginDocument{%
+	% 中文断行/标点与数学公式混排优化(仅在 xeCJK 可用时生效)
+	\ifdefined\xeCJKsetup
+		\xeCJKsetup{CheckSingle=true, PunctStyle=kaiming, CJKmath=true}%
+	\fi
+
 	\newdimen\tem@textwidth
 	\newdimen\tem@textheight
 
-	% 42 行/页
-	\tem@textheight=\dimexpr \tem@linesperpage\baselineskip + \topskip\relax
-
-	% 45 字/行(单栏) 或 每栏 21 字(双栏)
-	\if@twocolumn
-		\tem@textwidth=\dimexpr 2\tem@charstwocol\ccwd + \columnsep\relax
-	\else
-		\tem@textwidth=\dimexpr \tem@charsonecol\ccwd\relax
-	\fi
+	% 版心按“正文默认字号/行距”估算, 这样 42 行/页 与每行字数的设定更稳定。
+	% 这里取正文常用的“五号 + 单倍行距(\setstretch{1})”。
+	\begingroup
+		\zihao{5}% 五号
+		\setstretch{1}% 单倍行距
+		% 42 行/页
+		\global\tem@textheight=\dimexpr \tem@linesperpage\baselineskip + \topskip\relax
+		% 45 字/行(单栏) 或 每栏 21 字(双栏)
+		\if@twocolumn
+			\global\tem@textwidth=\dimexpr 2\tem@charstwocol\ccwd + \columnsep\relax
+		\else
+			\global\tem@textwidth=\dimexpr \tem@charsonecol\ccwd\relax
+		\fi
+	\endgroup
 
 	\geometry{textwidth=\tem@textwidth,textheight=\tem@textheight}%
 }
@@ -374,7 +409,7 @@
 	\tem@ifblank{#1#2#3#4#5#6}{}{%
 		\par\vspace{12pt}% 段前 12pt
 		\begingroup
-			\linespread{1}\selectfont
+			\setstretch{1}% 标题块整体单倍行距
 			\centering
 			% 中文标题: 二号黑体 + 英文 Arial
 			\tem@ifblank{#1}{}{%
@@ -458,10 +493,12 @@
 % - 英文使用 Times New Roman; 中文使用宋体
 % - 关键词段首空 6pt
 \newcommand\tem@EnSmallFiveFont{%
+	\setstretch{1}% 固定行距(不随全局倍数缩放)
 	\fontsize{9}{14}\selectfont
 	\ifx\tem@TimesLatin\relax\else\tem@TimesLatin\fi
 }
 \newcommand\tem@ZhSmallFiveFont{%
+	\setstretch{1}% 固定行距(不随全局倍数缩放)
 	\fontsize{9}{14}\selectfont
 	\ifx\tem@SongCJK\relax\songti\else\tem@SongCJK\fi
 }
@@ -509,10 +546,10 @@
 \newtoks\tem@MainSavedEverypar
 
 \newcommand\tem@MainTextParaSetup{%
-	\linespread{1}\selectfont
 	\zihao{5}% 五号
 	\ifx\tem@SongCJK\relax\songti\else\tem@SongCJK\fi
 	\ifx\tem@TimesLatin\relax\else\tem@TimesLatin\fi
+	\setstretch{1}% 单倍行距
 	\parindent=0.74cm\relax
 	\emergencystretch=1em\relax
 	\tolerance=2000\relax
@@ -555,6 +592,7 @@
 	\temMainTextDeactivate
 	\refstepcounter{section}%
 	\setcounter{subsection}{0}%
+	\setcounter{subsubsection}{0}%
 	\addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}%
 	\tem@MainsectionTitle{\thesection\quad #1}%
 	\temMainTextActivate
@@ -564,6 +602,112 @@
 	\par
 	\temMainTextDeactivate
 	\tem@MainsectionTitle{#1}%
+	\temMainTextActivate
+}
+
+% 二级标题: \Secondsection{} 代替 \subsection{}
+% 约定:
+% - 编号: 跟随 \Mainsection 的阿拉伯数字, 形如 1.1, 1.2, 3.4 ...
+% - 标题字体: 五号黑体(中文) + Arial(英文)
+% - 标题后的正文直到“下一个结构命令”前: 使用 Mainsection 同款正文样式
+\newcommand\tem@SecondsectionTitle[1]{%
+	\par
+	\noindent
+	{\zihao{5}\heiti\ifx\tem@ArialLatin\relax\else\tem@ArialLatin\fi \thesection.\arabic{subsection}\quad #1\par}%
+}
+
+\newcommand\Secondsection[1]{%
+	\par
+	\temMainTextDeactivate
+	\refstepcounter{subsection}%
+	\setcounter{subsubsection}{0}%
+	\addcontentsline{toc}{subsection}{\protect\numberline{\thesection.\arabic{subsection}}#1}%
+	\tem@SecondsectionTitle{#1}%
+	\temMainTextActivate
+}
+
+% 三级标题: \Thirdsection{} 代替 \subsubsection{}
+% 约定:
+% - 编号: 跟随 \Mainsection/\Secondsection, 形如 1.1.1, 1.2.1, 3.1.4 ...
+% - 标题字体: 五号宋体(中文) + Times New Roman(英文)
+% - 与正文段落紧贴: 不额外增加段前/段后间距
+% - 标题后的正文直到“下一个结构命令”前: 使用 Mainsection 同款正文样式
+\newcommand\tem@ThirdsectionTitle[1]{%
+	\par
+	\noindent
+	{\zihao{5}%
+	\ifx\tem@SongCJK\relax\songti\else\tem@SongCJK\fi
+	\ifx\tem@TimesLatin\relax\else\tem@TimesLatin\fi
+	\thesection.\arabic{subsection}.\arabic{subsubsection}\quad #1\par}%
+}
+
+\newcommand\Thirdsection[1]{%
+	\par
+	\temMainTextDeactivate
+	\refstepcounter{subsubsection}%
+	\addcontentsline{toc}{subsubsection}{\protect\numberline{\thesection.\arabic{subsection}.\arabic{subsubsection}}#1}%
+	\tem@ThirdsectionTitle{#1}%
+	\temMainTextActivate
+}
+
+% 数学语句块: \Def/\Thm/\Axiom/\Lithem/\Proof
+% 约定:
+% - 调用后先输出一行“顶格五号黑体”标题(可含中英文), 然后切换到正文样式
+% - 正文样式持续到下一个常见结构命令出现(由 temMainTextDeactivate 的钩子负责)
+% - Def/Thm/Axiom/Lithem 各自独立编号: 1,2,3...
+\newcounter{tem@def}
+\newcounter{tem@thm}
+\newcounter{tem@axiom}
+\newcounter{tem@lemma}
+
+\newcommand\tem@StmtHeadingNoNum[2]{%
+	\par
+	\noindent
+	{\zihao{5}\heiti\ifx\tem@ArialLatin\relax\else\tem@ArialLatin\fi #1\tem@ifblank{#2}{}{：#2}\par}%
+}
+
+\newcommand\tem@StmtHeadingWithNum[3]{%
+	\par
+	\noindent
+	{\zihao{5}\heiti\ifx\tem@ArialLatin\relax\else\tem@ArialLatin\fi #1\arabic{#2}\tem@ifblank{#3}{}{：#3}\par}%
+}
+
+\newcommand\Def[1]{%
+	\par
+	\temMainTextDeactivate
+	\refstepcounter{tem@def}%
+	\tem@StmtHeadingWithNum{定义}{tem@def}{#1}%
+	\temMainTextActivate
+}
+
+\newcommand\Thm[1]{%
+	\par
+	\temMainTextDeactivate
+	\refstepcounter{tem@thm}%
+	\tem@StmtHeadingWithNum{定理}{tem@thm}{#1}%
+	\temMainTextActivate
+}
+
+\newcommand\Axiom[1]{%
+	\par
+	\temMainTextDeactivate
+	\refstepcounter{tem@axiom}%
+	\tem@StmtHeadingWithNum{公理}{tem@axiom}{#1}%
+	\temMainTextActivate
+}
+
+\newcommand\Lithem[1]{%
+	\par
+	\temMainTextDeactivate
+	\refstepcounter{tem@lemma}%
+	\tem@StmtHeadingWithNum{引理}{tem@lemma}{#1}%
+	\temMainTextActivate
+}
+
+\newcommand\Proof[1]{%
+	\par
+	\temMainTextDeactivate
+	\tem@StmtHeadingNoNum{证明}{#1}%
 	\temMainTextActivate
 }
 

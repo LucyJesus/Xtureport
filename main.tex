@@ -1,5 +1,6 @@
 \documentclass[twocolumn]{tem}
 \usepackage{zhlipsum}
+\usepackage{Xtutable}
 % 页眉示例: 左/中/右三段, 位置由 tem.cls 里的制表位控制
 \temSetHeaderContent{实验报告}{傻逼大学}{第\thepage 页}
 
@@ -23,17 +24,111 @@
 \Mainsection{主标题示例 Main Section}
 这里是一段用于测试Mainsection正文样式的文字, 期望效果为五号, 中文宋体, 英文 Times New Roman, 首行缩进 0.74cm, 单倍行距. 同时测试含有数学公式的换行: 设 $E=mc^2$, 当公式与中文混排时也应能自动断行并尽量避免溢出.
 
-\zhlipsum[1-3]
+数字分组示例: \XtuNum{123456789.987654}
+
+\zhlipsum[1]
+
+\Def{度量空间}
+设集合 $X$ 上的映射 $d: X\times X\to \mathrm{R}$ 满足非负性、对称性与三角不等式，则称 $(X,d)$ 为一个度量空间。
+
+\Proof{}
+略。
+
+\Secondsection{三级标题五号黑体，英文及数字用 Arial,希腊字母保持不变，如$\theta \omega \rho \omega \delta$。换行时悬挂缩进为
+0，段前段后不空}
+
+\zhlipsum[2]
+
+\Thirdsection{表格}
 
 
-\subsection{代码}
-\begin{lstlisting}[language=Python]
-print('hello')
-\end{lstlisting}
+% 表格内容（严格按规范）
+\begin{table}[htbp]
+\centering
+\caption{DPMA 与 DFT 算法的性能比较}
+\label{tab:perf}
+\setlength{\tabcolsep}{8pt}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{L S S S S}
+\toprule
+% 算法 & $f_{\mathrm{sp}}$/Hz & $e_{\mathrm{ang}}/(^\circ)$ & $e_{\mathrm{mag}}/\%$ & $e_{\mathrm{TVE}}/\%$ \\
+算法 & 1 & 2 & 3 & 4 \\
+\midrule
+\multicolumn{5}{l}{\textbf{DFT}} \\
+& 2 & 0.099\,7 & 2.195\,9 & 9.971\,6 \\
+& 3 & 0.148\,6 & 3.694\,5 & 14.863\,3 \\
+& 4 & 0.194\,3 & 5.553\,8 & 19.521\,4 \\
+\addlinespace
+\multicolumn{5}{l}{\textbf{DPMA}} \\
+& 2 & 0.007\,3 & 1.241\,0 & 1.238\,1 \\
+& 3 & 0.017\,3 & 2.771\,7 & 2.775\,1 \\
+& 4 & 0.031\,5 & 4.884\,2 & 4.906\,5 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-\subsection{算法}
-\begin{algorithm}
-\caption{示例算法}
-\end{algorithm}
+% 百分数示例
+表中 \percentvar{B} 表示 B 组分的体积分数。
+
+\Mainsection{测试用第2部分标题}
+文字文字文字文字文字文字文字文字文字文字文字文字文字
+文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字
+wordswordswordswordswordswordswordswordswordswordswords
+wordswordswordswordswordswordsword
+swordswordswordswordswordswords
+
+\Secondsection{测试用第2部分二级标题}
+\Def{关系}
+设 $A$ 和 $B$ 是集合 $X$ 的子集, 则称 $R\subseteq A\times B$ 是 $A$ 到 $B$ 的一个关系。
+\Thm{单的连续函数一定单调}
+设 $f: \mathrm{R}\to \mathrm{R}$ 是一个单射的连续函数, 则 $f$ 在 $\mathrm{R}$ 上单调。
+
+\Thirdsection{测试用第2部分三级标题}
+\Proof{}
+略。
+
+证明证明证明
+
+\Mainsection{测试用第3部分标题}
+\zhlipsum[3]
+\Def{滤子}
+设 $X$ 是集合 $S$ 的一个子集, 且满足以下条件:
+\begin{itemize}
+\item $X$ 非空;
+\item 若 $A\in X$ 且 $A\subseteq B\subseteq S$, 则 $B\in X$;
+\item 若 $A\in X$ 且 $B\in X$, 则 $A\cap B\in X$.
+\end{itemize}
+则称 $X$ 是集合 $S$ 上的一个滤子。
+\Thm{Stolz 定理}
+设 $\{a_n\}$ 和 $\{b_n\}$ 是两个数列, 且 $\{b_n\}$ 是一个严格单调递增且无界的数列. 若 $\lim_{n\to\infty} \frac{a_{n+1}-a_n}{b_{n+1}-b_n} = L$ 存在, 则 $\lim_{n\to\infty} \frac{a_n}{b_n} = L$.
+
+反过来不行
+\Def{开集}
+设 $X$ 是集合 $S$ 的一个子集, 且对于 $S$ 中的任意点 $x\in X$, 都存在一个 $\varepsilon > 0$, 使得 $B(x,\varepsilon) \subseteq X$, 则称 $X$ 是集合 $S$ 上的一个开集。
+
+\Secondsection{测试用第3部分二级标题}
+WordsWordsWords
+\Secondsection{测试用第3部分二级标题2}
+\Thirdsection{测试用第3部分三级标题}
+WordsWordsWords
+\Secondsection{测试用第3部分二级标题3}
+WordsWordsWords
+\Thirdsection{测试用第3部分三级标题2}
+WordsWordsWords
+\Thirdsection{测试用第3部分三级标题3}
+\zhlipsum[4]
+
+\Mainsection{测试用第4部分标题}
+\zhlipsum[5]
+
+% \Secondsection{代码}
+% \begin{lstlisting}[language=Python]
+% print('hello')
+% \end{lstlisting}
+
+% \Secondsection{算法}
+% \begin{algorithm}
+% \caption{示例算法}
+% \end{algorithm}
 
 \end{document}
