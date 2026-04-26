@@ -1,11 +1,14 @@
 \documentclass[twocolumn]{tem}
 \usepackage{zhlipsum}
 \usepackage{Xtutable}
+\usepackage{Xtugraph}
+\usepackage{gbt7714}
 % 页眉示例: 左/中/右三段, 位置由 tem.cls 里的制表位控制
 \temSetHeaderContent{实验报告}{傻逼大学}{第\thepage 页}
 
 % 如果你把字体放到 fonts/ 下, 文件名匹配即可自动生效.
 % 例如: fonts/SimSun.ttf 和 fonts/Times New Roman.ttf
+
 
 \begin{document}
 \XtuTitleAuthorAddress{一个很长很长很长很长很长很长很长的示例标题 A Long Long Long Example Title}
@@ -45,24 +48,20 @@
 % 表格内容（严格按规范）
 \begin{table}[htbp]
 \centering
-\caption{DPMA 与 DFT 算法的性能比较}
-\label{tab:perf}
-\setlength{\tabcolsep}{8pt}
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{L S S S S}
+\XtuTableCaptionRef{tab:perf}{DPMA 与 DFT 算法的性能比较}{Performance comparison between DPMA and DFT algorithm}
+\XtuTableSetup
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}L S S S S@{}}
 \toprule
-% 算法 & $f_{\mathrm{sp}}$/Hz & $e_{\mathrm{ang}}/(^\circ)$ & $e_{\mathrm{mag}}/\%$ & $e_{\mathrm{TVE}}/\%$ \\
-算法 & 1 & 2 & 3 & 4 \\
+算法 & \multicolumn{1}{c}{\XtuUnitHeader{f_{sp}}{\mathrm{Hz}}} & \multicolumn{1}{c}{\XtuUnitHeader{e_{ang}}{(^\circ)}} & \multicolumn{1}{c}{\XtuUnitHeader{e_{mag}}{\%}} & \multicolumn{1}{c}{\XtuUnitHeader{e_{TVE}}{\%}} \\
 \midrule
-\multicolumn{5}{l}{\textbf{DFT}} \\
-& 2 & 0.099\,7 & 2.195\,9 & 9.971\,6 \\
-& 3 & 0.148\,6 & 3.694\,5 & 14.863\,3 \\
-& 4 & 0.194\,3 & 5.553\,8 & 19.521\,4 \\
+\multirow{3}{*}{\centering DFT} & 2 & 0.0997 & 2.1959 & 9.9716 \\
+& 3 & 0.1486 & 3.6945 & 14.8633 \\
+& 4 & 0.1943 & 5.5538 & 19.5214 \\
 \addlinespace
-\multicolumn{5}{l}{\textbf{DPMA}} \\
-& 2 & 0.007\,3 & 1.241\,0 & 1.238\,1 \\
-& 3 & 0.017\,3 & 2.771\,7 & 2.775\,1 \\
-& 4 & 0.031\,5 & 4.884\,2 & 4.906\,5 \\
+\multirow{3}{*}{\centering DPMA} & 2 & 0.0073 & 1.2410 & 1.2381 \\
+& 3 & 0.0173 & 2.7717 & 2.7751 \\
+& 4 & 0.0315 & 4.8842 & 4.9065 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -73,9 +72,9 @@
 \Mainsection{测试用第2部分标题}
 文字文字文字文字文字文字文字文字文字文字文字文字文字
 文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字
-wordswordswordswordswordswordswordswordswordswordswords
-wordswordswordswordswordswordsword
-swordswordswordswordswordswords
+words words words words words words words words words words words
+words words words words words words word
+swords words words words words words
 
 \Secondsection{测试用第2部分二级标题}
 \Def{关系}
@@ -121,14 +120,70 @@ WordsWordsWords
 \Mainsection{测试用第4部分标题}
 \zhlipsum[5]
 
+\Mainsection{图片命令与标题级别验证}
+本文依次验证单图、双图、三图、四图、五图命令, 并验证图引用: 见图\ref{fig:one-demo}、图\ref{fig:two-demo}、图\ref{fig:three-demo}、图\ref{fig:four-demo}、图\ref{fig:five-demo}。
+
+\Onegraph[fig:one-demo]{346016.jpg}{单图排版验证}{Single graph layout validation}
+\zhlipsum[6]
+
+\Twograph[fig:two-demo]{347031.jpg}{365072.jpg}{双图横排验证}{Two-graph horizontal layout}[(a) 样例 A,(b) 样例 B]
+\zhlipsum[7]
+
+\Threegraph[fig:three-demo]{368037.jpg}{372019.jpg}{376086.jpg}{三图倒品字验证}{Three-graph inverted layout}[(a) 上左,(b) 上右,(c) 下方主图]
+\zhlipsum[8]
+
+\Fourgraph[fig:four-demo]{384022.jpg}{384089.jpg}{385022.jpg}{388006.jpg}{四图田字验证}{Four-graph grid layout}[(a) 左上,(b) 右上,(c) 左下,(d) 右下]
+\zhlipsum[9]
+
+\Fivegraph[fig:five-demo]{388018.jpg}{388067.jpg}{393035.jpg}{346016.jpg}{347031.jpg}{五图环形验证}{Five-graph ring layout}[(a) 上左,(b) 上中,(c) 上右,(d) 下左主图,(e) 下右主图]
+\zhlipsum[10]
+
+\Secondsection{格式占位二级标题}
+这一段用于验证二级标题的字号、字重、行距与段落衔接。
+
+\Thirdsection{格式占位三级标题}
+这一段用于验证三级标题的字号、字体与正文过渡。
+
+\paragraph{格式占位四级标题}
+这是四级标题占位内容, 用于检查更细粒度标题在当前模板中的显示与换行表现。
+
 % \Secondsection{代码}
 % \begin{lstlisting}[language=Python]
 % print('hello')
 % \end{lstlisting}
+文字\cite{knuth1984}文字\cite{lamport1986}
+
+\bibliographystyle{gbt7714-numerical}
+\bibliography{reference}
+
+\appendix
+\Mainsection{附录 A: 代码示例}
+\begin{lstlisting}[language=Python]
+print('hello')
+\end{lstlisting}
+
+\Mainsection{附录 B: 算法示例}
 
 % \Secondsection{算法}
 % \begin{algorithm}
 % \caption{示例算法}
 % \end{algorithm}
+
+\begin{algorithm}
+\caption{recursive Fibonacci}
+\label{alg:fibonacci}
+\textbf{Input:} $n \in \mathrm{N}$\\
+\textbf{Output:} $F(n)$
+\begin{enumerate}
+\item If $n=0$, return $0$.
+\item If $n=1$, return $1$.
+\item Otherwise, return $\textit{Fibonacci}(n-1)+\textit{Fibonacci}(n-2)$.
+\end{enumerate}
+\end{algorithm}
+
+\clearpage
+\nocite{*}
+
+
 
 \end{document}

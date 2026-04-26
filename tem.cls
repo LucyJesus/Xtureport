@@ -380,6 +380,26 @@
 	}{}%
 \fi
 
+% 明确覆盖常用中文字体命令, 优先使用 fonts/ 下字体, 避免作者等位置回退到系统字体导致乱码。
+\ifdefined\setCJKfamilyfont
+	\IfFileExists{\tem@fontdir simsun.ttc}{%
+		\setCJKfamilyfont{temsong}[Path=\tem@fontdir,FontIndex=0]{simsun.ttc}%
+		\renewcommand\songti{\CJKfamily{temsong}}%
+	}{}%
+	\IfFileExists{\tem@fontdir simhei.ttf}{%
+		\setCJKfamilyfont{temhei}[Path=\tem@fontdir]{simhei.ttf}%
+		\renewcommand\heiti{\CJKfamily{temhei}}%
+	}{}%
+	\IfFileExists{\tem@fontdir simkai.ttf}{%
+		\setCJKfamilyfont{temkai}[Path=\tem@fontdir]{simkai.ttf}%
+		\renewcommand\kaishu{\CJKfamily{temkai}}%
+	}{}%
+	\IfFileExists{\tem@fontdir simfang.ttf}{%
+		\setCJKfamilyfont{temfang}[Path=\tem@fontdir]{simfang.ttf}%
+		\renewcommand\fangsong{\CJKfamily{temfang}}%
+	}{}%
+\fi
+
 \temNewCJKFamilyWithFallback\tem@HeiCJK{simhei.ttf}{SimHei}
 % Windows 常见文件名: simfang.ttf/simkai.ttf (仿宋可后续补)
 \temNewCJKFamilyWithFallback\tem@FangSongCJK{simfang.ttf}{FangSong}
@@ -543,7 +563,40 @@
 %   单倍行距; 尽量改善中文断行与公式导致的溢出
 \RequirePackage{etoolbox}
 \newif\iftem@maintextactive
+\newif\iftem@appendixmode
+\newif\iftem@tocwasdoublecol
+\tem@appendixmodefalse
 \newtoks\tem@MainSavedEverypar
+
+% 目录页优先占满整页: 在双栏文档中临时切到单栏, 目录后恢复双栏。
+\let\tem@OldTableofcontents\tableofcontents
+\renewcommand\tableofcontents{%
+\t\clearpage
+\t\tem@tocwasdoublecolfalse
+\t\if@twocolumn
+\t\t\tem@tocwasdoublecoltrue
+\t\t\onecolumn
+\t\fi
+\t\tem@OldTableofcontents
+\t\clearpage
+\t\iftem@tocwasdoublecol
+\t\t\twocolumn
+\t\fi
+}
+
+% 附录统一行为:
+% - 进入附录时自动新开页
+% - 附录整体使用单栏(与正文双栏区分)
+\let\tem@OldAppendix\appendix
+\renewcommand\appendix{%
+\t\if@twocolumn
+\t\t\onecolumn
+\t\else
+\t\t\clearpage
+\t\fi
+\t\tem@appendixmodetrue
+\t\tem@OldAppendix
+}
 
 \newcommand\tem@MainTextParaSetup{%
 	\zihao{5}% 五号
@@ -589,6 +642,9 @@
 
 \newcommand\tem@Mainsection[1]{%
 	\par
+	\iftem@appendixmode
+		\clearpage
+	\fi
 	\temMainTextDeactivate
 	\refstepcounter{section}%
 	\setcounter{subsection}{0}%
@@ -600,6 +656,9 @@
 
 \newcommand\tem@MainsectionStar[1]{%
 	\par
+	\iftem@appendixmode
+		\clearpage
+	\fi
 	\temMainTextDeactivate
 	\tem@MainsectionTitle{#1}%
 	\temMainTextActivate
@@ -713,6 +772,8 @@
 
 % 算法(如需其他算法样式, 后续可在此扩展)
 \RequirePackage{algorithm}
+\RequirePackage{algorithmic}
+% \RequirePackage[ruled,vlined]{algorithm2e}
 
 % 代码
 \RequirePackage{xcolor}

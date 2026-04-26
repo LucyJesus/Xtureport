@@ -411,9 +411,19 @@ Package: ifthen 2020/11/24 v1.1c Standard LaTeX ifthen package (DPC)
 )
 \@float@every@algorithm=\toks23
 \c@algorithm=\count307
+) (algorithmic.sty
+Invalid UTF-8 byte or sequence at line 11 replaced by U+FFFD.
+Package: algorithmic 2009/08/24 v0.1 Document Style `algorithmic'
+\c@ALC@unique=\count308
+\c@ALC@line=\count309
+\c@ALC@rem=\count310
+\c@ALC@depth=\count311
+\ALC@tlm=\skip69
+\algorithmicindent=\skip70
 ) (xcolor.sty
 Package: xcolor 2021/10/31 v2.13 LaTeX color extensions (UK)
- (color.cfg
+
+(color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package xcolor Info: Driver file: xetex.def on input line 227.
@@ -426,22 +436,22 @@ Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1373.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1374.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1375.
 ) (listings.sty
-\lst@mode=\count308
+\lst@mode=\count312
 \lst@gtempboxa=\box64
 \lst@token=\toks24
-\lst@length=\count309
+\lst@length=\count313
 \lst@currlwidth=\dimen194
-\lst@column=\count310
-\lst@pos=\count311
+\lst@column=\count314
+\lst@pos=\count315
 \lst@lostspace=\dimen195
 \lst@width=\dimen196
-\lst@newlines=\count312
-\lst@lineno=\count313
+\lst@newlines=\count316
+\lst@lineno=\count317
 \lst@maxwidth=\dimen197
-(lstmisc.sty
+ (lstmisc.sty
 File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
-\c@lstnumber=\count314
-\lst@skipnumbers=\count315
+\c@lstnumber=\count318
+\lst@skipnumbers=\count319
 \lst@framebox=\box65
 ) (listings.cfg
 File: listings.cfg 2020/03/24 1.8d listings configuration
@@ -449,132 +459,206 @@ File: listings.cfg 2020/03/24 1.8d listings configuration
 Package: listings 2020/03/24 1.8d (Carsten Heinz)
  (xeCJK-listings.sty
 Package: xeCJK-listings 2021/12/12 v3.8.8 xeCJK patch file for listings
-\l__xeCJK_listings_max_char_int=\count316
-\l__xeCJK_listings_flag_int=\count317
-)) (zhlipsum.sty
+\l__xeCJK_listings_max_char_int=\count320
+\l__xeCJK_listings_flag_int=\count321
+))
+(zhlipsum.sty
 Package: zhlipsum 2020/04/10 v1.2.0 Chinese dummy text
-\l__zhlipsum_begin_int=\count318
-\l__zhlipsum_end_int=\count319
-\l__zhlipsum_max_int=\count320
-
-(zhlipsum-utf8.def
+\l__zhlipsum_begin_int=\count322
+\l__zhlipsum_end_int=\count323
+\l__zhlipsum_max_int=\count324
+ (zhlipsum-utf8.def
 File: zhlipsum-utf8.def 2020/04/10 v1.2.0 Chinese dummy text with UTF-8 encodin
 g (for zhlipsum)
-\g__zhlipsum_simp_int=\count321
+\g__zhlipsum_simp_int=\count325
 
 Package zhlipsum Info: Chinese dummy text "simp" is created. It has 50
 (zhlipsum)             paragraphs.
 
-\g__zhlipsum_trad_int=\count322
+\g__zhlipsum_trad_int=\count326
 
 Package zhlipsum Info: Chinese dummy text "trad" is created. It has 50
 (zhlipsum)             paragraphs.
 
-\g__zhlipsum_nanshanjing_int=\count323
+\g__zhlipsum_nanshanjing_int=\count327
 
 Package zhlipsum Info: Chinese dummy text "nanshanjing" is created. It has 43
 (zhlipsum)             paragraphs.
 
-\g__zhlipsum_xiangyu_int=\count324
+\g__zhlipsum_xiangyu_int=\count328
 
 Package zhlipsum Info: Chinese dummy text "xiangyu" is created. It has 45
 (zhlipsum)             paragraphs.
 
-\g__zhlipsum_zhufu_int=\count325
+\g__zhlipsum_zhufu_int=\count329
 
 Package zhlipsum Info: Chinese dummy text "zhufu" is created. It has 110
 (zhlipsum)             paragraphs.
 
-\g__zhlipsum_aspirin_int=\count326
+\g__zhlipsum_aspirin_int=\count330
 
 Package zhlipsum Info: Chinese dummy text "aspirin" is created. It has 66
 (zhlipsum)             paragraphs.
 
+)) (Xtutable.sty
+Package: Xtutable 2026/04/26 XTU table style
+ (booktabs.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen198
+\lightrulewidth=\dimen199
+\cmidrulewidth=\dimen256
+\belowrulesep=\dimen257
+\belowbottomsep=\dimen258
+\aboverulesep=\dimen259
+\abovetopsep=\dimen260
+\cmidrulesep=\dimen261
+\cmidrulekern=\dimen262
+\defaultaddspace=\dimen263
+\@cmidla=\count331
+\@cmidlb=\count332
+\@aboverulesep=\dimen264
+\@belowrulesep=\dimen265
+\@thisruleclass=\count333
+\@lastruleclass=\count334
+\@thisrulewidth=\dimen266
+) (makecell.sty
+Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
+\rotheadsize=\dimen267
+\c@nlinenum=\count335
+\TeXr@lab=\toks25
+)
+(multirow.sty
+Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
+\multirow@colwidth=\skip71
+\multirow@cntb=\count336
+\multirow@dima=\skip72
+\bigstrutjot=\dimen268
+)
+
+Package siunitx Info: Option "group-digits = false" has been deprecated in
+(siunitx)             this release.
+(siunitx)             
+(siunitx)             Use "group-digits = none" as a replacement.
+
+
+Package siunitx Info: Option "detect-mode" has been deprecated in this
+(siunitx)             release.
+(siunitx)             
+(siunitx)             Use "mode = match" as a replacement.
+
+
+Package siunitx Info: Option "detect-weight" has been deprecated in this
+(siunitx)             release.
+(siunitx)             
+(siunitx)             Use "reset-text-series = false, text-series-to-math =
+(siunitx)             true" as a replacement.
+
+
+Package siunitx Info: Option "detect-family" has been deprecated in this
+(siunitx)             release.
+(siunitx)             
+(siunitx)             Use "reset-text-family = false, text-family-to-math =
+(siunitx)             true" as a replacement.
+
+) (Xtugraph.sty
+Package: Xtugraph 2026/04/26 XTU graph style
+) (gbt7714.sty
+Package: gbt7714 2022/03/21 v2.1.4 GB/T 7714 BibTeX Style
+ (natbib.sty
+Package: natbib 2010/09/13 8.31b (PWD, AO)
+\bibhang=\skip73
+\bibsep=\skip74
+LaTeX Info: Redefining \cite on input line 694.
+\c@NAT@ctr=\count337
+) (url.sty
+\Urlmuskip=\muskip17
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 ))
 Package translations Info: No language package found. I am going to use `englis
-h' as default language. on input line 9.
- (main.aux)
+h' as default language. on input line 13.
+
+No file main.aux.
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 9.
-LaTeX Font Info:    ... okay on input line 9.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 9.
-LaTeX Font Info:    ... okay on input line 9.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 9.
-LaTeX Font Info:    ... okay on input line 9.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 9.
-LaTeX Font Info:    ... okay on input line 9.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 9.
-LaTeX Font Info:    ... okay on input line 9.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 9.
-LaTeX Font Info:    ... okay on input line 9.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 9.
-LaTeX Font Info:    ... okay on input line 9.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 9.
-LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
 
 Package fontspec Info: Adjusting the maths setup (use [no-math] to avoid
 (fontspec)             this).
 
 \symlegacymaths=\mathgroup4
 LaTeX Font Info:    Overwriting symbol font `legacymaths' in version `bold'
-(Font)                  OT1/cmr/m/n --> OT1/cmr/bx/n on input line 9.
-LaTeX Font Info:    Redeclaring math accent \acute on input line 9.
-LaTeX Font Info:    Redeclaring math accent \grave on input line 9.
-LaTeX Font Info:    Redeclaring math accent \ddot on input line 9.
-LaTeX Font Info:    Redeclaring math accent \tilde on input line 9.
-LaTeX Font Info:    Redeclaring math accent \bar on input line 9.
-LaTeX Font Info:    Redeclaring math accent \breve on input line 9.
-LaTeX Font Info:    Redeclaring math accent \check on input line 9.
-LaTeX Font Info:    Redeclaring math accent \hat on input line 9.
-LaTeX Font Info:    Redeclaring math accent \dot on input line 9.
-LaTeX Font Info:    Redeclaring math accent \mathring on input line 9.
-LaTeX Font Info:    Redeclaring math symbol \colon on input line 9.
-LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 9.
-LaTeX Font Info:    Redeclaring math symbol \Delta on input line 9.
-LaTeX Font Info:    Redeclaring math symbol \Theta on input line 9.
-LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 9.
-LaTeX Font Info:    Redeclaring math symbol \Xi on input line 9.
-LaTeX Font Info:    Redeclaring math symbol \Pi on input line 9.
-LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 9.
-LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 9.
-LaTeX Font Info:    Redeclaring math symbol \Phi on input line 9.
-LaTeX Font Info:    Redeclaring math symbol \Psi on input line 9.
-LaTeX Font Info:    Redeclaring math symbol \Omega on input line 9.
-LaTeX Font Info:    Redeclaring math symbol \mathdollar on input line 9.
-LaTeX Font Info:    Redeclaring symbol font `operators' on input line 9.
+(Font)                  OT1/cmr/m/n --> OT1/cmr/bx/n on input line 13.
+LaTeX Font Info:    Redeclaring math accent \acute on input line 13.
+LaTeX Font Info:    Redeclaring math accent \grave on input line 13.
+LaTeX Font Info:    Redeclaring math accent \ddot on input line 13.
+LaTeX Font Info:    Redeclaring math accent \tilde on input line 13.
+LaTeX Font Info:    Redeclaring math accent \bar on input line 13.
+LaTeX Font Info:    Redeclaring math accent \breve on input line 13.
+LaTeX Font Info:    Redeclaring math accent \check on input line 13.
+LaTeX Font Info:    Redeclaring math accent \hat on input line 13.
+LaTeX Font Info:    Redeclaring math accent \dot on input line 13.
+LaTeX Font Info:    Redeclaring math accent \mathring on input line 13.
+LaTeX Font Info:    Redeclaring math symbol \colon on input line 13.
+LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 13.
+LaTeX Font Info:    Redeclaring math symbol \Delta on input line 13.
+LaTeX Font Info:    Redeclaring math symbol \Theta on input line 13.
+LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 13.
+LaTeX Font Info:    Redeclaring math symbol \Xi on input line 13.
+LaTeX Font Info:    Redeclaring math symbol \Pi on input line 13.
+LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 13.
+LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 13.
+LaTeX Font Info:    Redeclaring math symbol \Phi on input line 13.
+LaTeX Font Info:    Redeclaring math symbol \Psi on input line 13.
+LaTeX Font Info:    Redeclaring math symbol \Omega on input line 13.
+LaTeX Font Info:    Redeclaring math symbol \mathdollar on input line 13.
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 13.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `normal' on input line 9.
+(Font)              `operators' in the math version `normal' on input line 13.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> TU/lmr/m/n on input line 9.
+(Font)                  OT1/cmr/m/n --> TU/lmr/m/n on input line 13.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `bold' on input line 9.
+(Font)              `operators' in the math version `bold' on input line 13.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> TU/lmr/m/n on input line 9.
+(Font)                  OT1/cmr/bx/n --> TU/lmr/m/n on input line 13.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  TU/lmr/m/n --> TU/lmr/m/n on input line 9.
+(Font)                  TU/lmr/m/n --> TU/lmr/m/n on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> TU/lmr/m/it on input line 9.
+(Font)                  OT1/cmr/m/it --> TU/lmr/m/it on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> TU/lmr/b/n on input line 9.
+(Font)                  OT1/cmr/bx/n --> TU/lmr/b/n on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 9.
+(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> TU/lmtt/m/n on input line 9.
+(Font)                  OT1/cmtt/m/n --> TU/lmtt/m/n on input line 13.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  TU/lmr/m/n --> TU/lmr/b/n on input line 9.
+(Font)                  TU/lmr/m/n --> TU/lmr/b/n on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> TU/lmr/b/it on input line 9.
+(Font)                  OT1/cmr/bx/it --> TU/lmr/b/it on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 9.
+(Font)                  OT1/cmss/bx/n --> TU/lmss/b/n on input line 13.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> TU/lmtt/b/n on input line 9.
- (translations-basic-dictionary-english.trsl
+(Font)                  OT1/cmtt/m/n --> TU/lmtt/b/n on input line 13.
+(translations-basic-dictionary-english.trsl
 File: translations-basic-dictionary-english.trsl (english translation file `tra
 nslations-basic-dictionary')
 )
 Package translations Info: loading dictionary `translations-basic-dictionary' f
-or `english'. on input line 9.
+or `english'. on input line 13.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
@@ -610,8 +694,8 @@ or `english'. on input line 9.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-\tem@textwidth=\dimen198
-\tem@textheight=\dimen199
+\tem@textwidth=\dimen269
+\tem@textheight=\dimen270
 
 Package geometry Warning: Over-specification in `h'-direction.
     `width' (2351.39336pt) is ignored.
@@ -620,59 +704,28 @@ Package geometry Warning: Over-specification in `h'-direction.
 Package geometry Warning: Over-specification in `v'-direction.
     `height' (541.18439pt) is ignored.
 
-\c@lstlisting=\count327
+\c@lstlisting=\count338
 
-Package fontspec Warning: Font "STHeiti" does not contain requested Script
-(fontspec)                "CJK".
-
-
-Package fontspec Info: Could not resolve font "STHeiti/BI" (it probably
-(fontspec)             doesn't exist).
-
-
-Package fontspec Info: Could not resolve font "STHeiti/B" (it probably doesn't
-(fontspec)             exist).
-
-
-Package fontspec Info: Could not resolve font "STHeiti/I" (it probably doesn't
-(fontspec)             exist).
-
-
-Package fontspec Info: Font family 'STHeiti(0)' created for font 'STHeiti'
-(fontspec)             with options [Script={CJK}].
+Package fontspec Info: Font family 'simhei.ttf(0)' created for font
+(fontspec)             'simhei.ttf' with options [Script={CJK},Path={fonts/}].
 (fontspec)              
 (fontspec)              This font family consists of the following NFSS
 (fontspec)             series/shapes:
 (fontspec)              
 (fontspec)             - 'normal' (m/n) with NFSS spec.:
-(fontspec)             <->"STHeiti/OT:language=dflt;"
+(fontspec)             <->"[fonts/simhei.ttf]/OT:script=hani;language=dflt;"
 (fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
 
 
-Package fontspec Warning: Font "STFangsong" does not contain requested Script
-(fontspec)                "CJK".
-
-
-Package fontspec Info: Could not resolve font "STFangsong/BI" (it probably
-(fontspec)             doesn't exist).
-
-
-Package fontspec Info: Could not resolve font "STFangsong/B" (it probably
-(fontspec)             doesn't exist).
-
-
-Package fontspec Info: Could not resolve font "STFangsong/I" (it probably
-(fontspec)             doesn't exist).
-
-
-Package fontspec Info: Font family 'STFangsong(0)' created for font
-(fontspec)             'STFangsong' with options [Script={CJK}].
+Package fontspec Info: Font family 'simfang.ttf(0)' created for font
+(fontspec)             'simfang.ttf' with options
+(fontspec)             [Script={CJK},Path={fonts/}].
 (fontspec)              
 (fontspec)              This font family consists of the following NFSS
 (fontspec)             series/shapes:
 (fontspec)              
 (fontspec)             - 'normal' (m/n) with NFSS spec.:
-(fontspec)             <->"STFangsong/OT:language=dflt;"
+(fontspec)             <->"[fonts/simfang.ttf]/OT:script=hani;language=dflt;"
 (fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
 
 
@@ -688,22 +741,34 @@ Package fontspec Info: Font family 'simkai.ttf(0)' created for font
 
 
 LaTeX Font Warning: Font shape `TU/times.ttf(0)/bx/n' undefined
-(Font)              using `TU/times.ttf(0)/m/n' instead on input line 15.
+(Font)              using `TU/times.ttf(0)/m/n' instead on input line 19.
 
 
 LaTeX Font Warning: Font shape `TU/times.ttf(0)/b/n' undefined
-(Font)              using `TU/times.ttf(0)/bx/n' instead on input line 19.
+(Font)              using `TU/times.ttf(0)/bx/n' instead on input line 23.
 
 
 LaTeX Font Warning: Font shape `TU/times.ttf(0)/b/n' undefined
-(Font)              using `TU/times.ttf(0)/bx/n' instead on input line 20.
+(Font)              using `TU/times.ttf(0)/bx/n' instead on input line 24.
 
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.53937> on input line 24.
+(Font)              <10.53937> on input line 28.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 24.
+(Font)              <7> on input line 28.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 24.
+(Font)              <5> on input line 28.
+
+LaTeX Font Warning: Font shape `TU/times.ttf(0)/b/n' undefined
+(Font)              using `TU/times.ttf(0)/bx/n' instead on input line 51.
+
+
+LaTeX Font Warning: Font shape `TU/simhei.ttf(0)/bx/n' undefined
+(Font)              using `TU/simhei.ttf(0)/m/n' instead on input line 51.
+
+
+LaTeX Font Warning: Font shape `TU/times.ttf(0)/b/n' undefined
+(Font)              using `TU/times.ttf(0)/bx/n' instead on input line 51.
+
 
 Package fontspec Info: Font family 'simsun.ttc(1)' created for font
 (fontspec)             'simsun.ttc' with options [Script={CJK},Path={fonts/}].
@@ -740,9 +805,157 @@ Package fancyhdr Warning: \footskip is too small (0.0pt):
 [1
 
 
-] (main.aux)
+]
 
-LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 12.64723pt, for example:
+(fancyhdr)                \setlength{\headheight}{12.64723pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
 
- )
-Output written on main.xdv (1 page, 25596 bytes).
+(fancyhdr)                \addtolength{\topmargin}{-0.64723pt}.
+
+
+Package fancyhdr Warning: \footskip is too small (0.0pt): 
+(fancyhdr)                Make it at least 3.7942pt, for example:
+(fancyhdr)                \setlength{\footskip}{3.7942pt}.
+
+[2]
+
+LaTeX Warning: Reference `fig:one-demo' on page 3 undefined on input line 124.
+
+
+LaTeX Warning: Reference `fig:two-demo' on page 3 undefined on input line 124.
+
+
+LaTeX Warning: Reference `fig:three-demo' on page 3 undefined on input line 124
+.
+
+
+LaTeX Warning: Reference `fig:four-demo' on page 3 undefined on input line 124.
+
+
+
+LaTeX Warning: Reference `fig:five-demo' on page 3 undefined on input line 124.
+
+
+File: imgs/346016.jpg Graphic file (type bmp)
+<imgs/346016.jpg>
+
+LaTeX Font Warning: Font shape `TU/times.ttf(0)/b/n' undefined
+(Font)              using `TU/times.ttf(0)/bx/n' instead on input line 126.
+
+
+LaTeX Font Warning: Font shape `TU/times.ttf(0)/b/n' undefined
+(Font)              using `TU/times.ttf(0)/bx/n' instead on input line 126.
+
+File: imgs/347031.jpg Graphic file (type bmp)
+<imgs/347031.jpg>
+File: imgs/365072.jpg Graphic file (type bmp)
+<imgs/365072.jpg>
+
+LaTeX Font Warning: Font shape `TU/times.ttf(0)/b/n' undefined
+(Font)              using `TU/times.ttf(0)/bx/n' instead on input line 129.
+
+
+LaTeX Font Warning: Font shape `TU/times.ttf(0)/b/n' undefined
+(Font)              using `TU/times.ttf(0)/bx/n' instead on input line 129.
+
+File: imgs/368037.jpg Graphic file (type bmp)
+<imgs/368037.jpg>
+File: imgs/372019.jpg Graphic file (type bmp)
+<imgs/372019.jpg>
+File: imgs/376086.jpg Graphic file (type bmp)
+<imgs/376086.jpg>
+
+LaTeX Font Warning: Font shape `TU/times.ttf(0)/b/n' undefined
+(Font)              using `TU/times.ttf(0)/bx/n' instead on input line 132.
+
+
+LaTeX Font Warning: Font shape `TU/times.ttf(0)/b/n' undefined
+(Font)              using `TU/times.ttf(0)/bx/n' instead on input line 132.
+
+File: imgs/384022.jpg Graphic file (type bmp)
+<imgs/384022.jpg>
+File: imgs/384089.jpg Graphic file (type bmp)
+<imgs/384089.jpg>
+File: imgs/385022.jpg Graphic file (type bmp)
+<imgs/385022.jpg>
+File: imgs/388006.jpg Graphic file (type bmp)
+<imgs/388006.jpg>
+
+LaTeX Font Warning: Font shape `TU/times.ttf(0)/b/n' undefined
+(Font)              using `TU/times.ttf(0)/bx/n' instead on input line 135.
+
+
+LaTeX Font Warning: Font shape `TU/times.ttf(0)/b/n' undefined
+(Font)              using `TU/times.ttf(0)/bx/n' instead on input line 135.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 12.64723pt, for example:
+(fancyhdr)                \setlength{\headheight}{12.64723pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-0.64723pt}.
+
+
+Package fancyhdr Warning: \footskip is too small (0.0pt): 
+(fancyhdr)                Make it at least 3.7942pt, for example:
+(fancyhdr)                \setlength{\footskip}{3.7942pt}.
+
+[3]
+File: imgs/388018.jpg Graphic file (type bmp)
+<imgs/388018.jpg>
+File: imgs/388067.jpg Graphic file (type bmp)
+<imgs/388067.jpg>
+File: imgs/393035.jpg Graphic file (type bmp)
+<imgs/393035.jpg>
+File: imgs/346016.jpg Graphic file (type bmp)
+<imgs/346016.jpg>
+File: imgs/347031.jpg Graphic file (type bmp)
+<imgs/347031.jpg>
+
+
+LaTeX Font Warning: Font shape `TU/times.ttf(0)/b/n' undefined
+(Font)              using `TU/times.ttf(0)/bx/n' instead on input line 138.
+
+
+LaTeX Font Warning: Font shape `TU/times.ttf(0)/b/n' undefined
+(Font)              using `TU/times.ttf(0)/bx/n' instead on input line 138.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 12.64723pt, for example:
+(fancyhdr)                \setlength{\headheight}{12.64723pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-0.64723pt}.
+
+
+Package fancyhdr Warning: \footskip is too small (0.0pt): 
+(fancyhdr)                Make it at least 3.7942pt, for example:
+(fancyhdr)                \setlength{\footskip}{3.7942pt}.
+
+[4]
+
+Package natbib Warning: Citation `knuth1984' on page 5 undefined on input line 
+154.
+
+
+Package natbib Warning: Citation `lamport1986' on page 5 undefined on input lin
+e 154.
+
+No file main.bbl.
+LaTeX Font Info:    Trying to load font information for OML+times.ttf(0) on inp
+ut line 159.
+LaTeX Font Info:    No file OMLtimes.ttf(0).fd. on input line 159.
+
+LaTeX Font Warning: Font shape `OML/times.ttf(0)/m/n' undefined
+(Font)              using `OML/cmm/m/it' instead on input line 159.
+
+! You can't use a prefix with `end-group character }'.
+<to be read again> 
+                   \egroup 
+l.159 \appendix
+               
+Output written on main.xdv (4 pages, 106356 bytes).

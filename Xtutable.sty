@@ -1,114 +1,96 @@
-% table.sty
-% 依赖: tem.cls (已加载 ctex, siunitx, geometry, fontspec 等)
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tem-table}[2026/04/26 XTU Table Style Package]
+\ProvidesPackage{Xtutable}[2026/04/26 XTU table style]
 
-% === 1. 加载必要宏包 ===
-\RequirePackage{booktabs}      % 专业表格线（替代 \hline）
-\RequirePackage{makecell}     % 支持 \thead, \multirow, 断行控制
-\RequirePackage{array}        % 自定义列类型
-\RequirePackage{siunitx}      % 单位与数字格式（已由 tem.cls 定义 \XtuNum）
-\RequirePackage{xcolor}       % 颜色（备用）
-\RequirePackage{etoolbox}    % 钩子
+\RequirePackage{booktabs}
+\RequirePackage{makecell}
+\RequirePackage{array}
+\RequirePackage{multirow}
+\RequirePackage{siunitx}
 
-% === 2. 定义表格专用字体与字号 ===
-% 小五 = 9pt / 14pt 行距（固定）
-\newcommand\tem@tablecaptionfont{%
-  \fontsize{9}{14}\selectfont
+% 规范线宽: 顶线/底线 0.75pt, 栏目线 0.5pt
+\setlength{\heavyrulewidth}{0.75pt}
+\setlength{\lightrulewidth}{0.5pt}
+\setlength{\cmidrulewidth}{0.5pt}
+
+% 统一字体命令
+\newcommand\XtuTableLatin{%
   \ifx\tem@TimesLatin\relax\else\tem@TimesLatin\fi
 }
-\newcommand\tem@tabletextfont{%
-  \fontsize{10}{14}\selectfont % 六号 ≈ 10pt（CTEX 中六号为 10pt）
+\newcommand\XtuTableBodyFont{%
+  \fontsize{10}{14}\selectfont
   \ifx\tem@SongCJK\relax\songti\else\tem@SongCJK\fi
-  \ifx\tem@TimesLatin\relax\else\tem@TimesLatin\fi
+  \XtuTableLatin
 }
-
-% === 3. 重定义 \caption 样式（仅用于 table 环境）===
-\AtBeginDocument{%
-  % 保存原始 caption 命令
-  \let\oldcaption\caption
-  % 重定义 table 的 caption
-  \renewcommand{\caption}{%
-    \if@tablecaptionactive
-      \oldcaption
-    \else
-      \begingroup
-      \tem@tablecaptionfont
-      \def\@captype{table}%
-      \let\@makecaption\tem@makecaptiontable
-      \oldcaption
-      \endgroup
-    \fi
-  }
-}
-
-% 自定义 table caption 格式
-\newif\if@tablecaptionactive
-\newcommand\tem@makecaptiontable[2]{%
-  % #1 = label, #2 = text
-  \par
-  \vspace{3pt}% 段前 3pt
-  \centering
-  % 中文表题：小五黑体（实际用 Times New Roman 加黑 + 中文字体回退）
-  \ifx\tem@ArialLatin\relax\else\tem@ArialLatin\fi
+\newcommand\XtuTableCaptionCNFont{%
+  \fontsize{9}{14}\selectfont
+  \ifx\tem@HeiCJK\relax\heiti\else\tem@HeiCJK\fi
+  \XtuTableLatin
+  \color{black}
   \bfseries
-  \tem@tablecaptionfont
-  #2%
-  \par
-  \vspace{3pt}% 英文表题后空 3pt（若含英文则自动包含）
+}
+\newcommand\XtuTableCaptionENFont{%
+  \fontsize{9}{14}\selectfont
+  \XtuTableLatin
+  \color{black}
+  \bfseries
 }
 
-% === 4. 定义表格主体样式 ===
-% 列类型：S（siunitx 对齐）、C（居中）、L（左对齐）、R（右对齐）
-% 所有列默认使用六宋 + Times 数字/英文，14pt 行距
-\newcolumntype{S}{>{\tem@tabletextfont}S}
-\newcolumntype{C}{>{\tem@tabletextfont}c}
-\newcolumntype{L}{>{\tem@tabletextfont}l}
-\newcolumntype{R}{>{\tem@tabletextfont}r}
+% 表格列类型: 文本列 + 数值列(制表位对齐)
+\newcolumntype{L}{>{\XtuTableBodyFont}l}
+\newcolumntype{C}{>{\XtuTableBodyFont}c}
+\newcolumntype{R}{>{\XtuTableBodyFont}r}
 
-% === 5. 重定义 booktabs 线宽 ===
-\setlength{\heavyrulewidth}{0.75pt}   % 顶线/底线
-\setlength{\lightrulewidth}{0.5pt}    % 栏目线
-\setlength{\cmidrulewidth}{0.5pt}     % midrule
-
-% === 6. 单位分数形式支持：推荐用 \si{...} 或自定义命令
-% 规范要求：单位与物理量折行时，分数线划在上一行末
-% 解决方案：用 \makecell + \raggedright + 手动换行（或用 \splitfrac 若需自动）
-% 提供辅助命令：
-\newcommand\unitfrac[2]{% 例：\unitfrac{v}{m/s}
-  \makecell[l]{#1\\[-0.5ex]\small\si{#2}}%
-}
-% 更优：用 \splitfrac（需 amsmath），但为轻量不强制依赖，此处提供简易版
-\newcommand\physunit[2]{% 物理量 + 单位（折行安全）
-  \makecell[l]{#1\\[-0.3ex]\small\si{#2}}%
+\sisetup{%
+  mode=text,
+  group-digits=false,
+  table-number-alignment=center,
+  detect-mode=true,
+  detect-weight=true,
+  detect-family=true
 }
 
-% === 7. 百分数规范：φB/% 形式
-\newcommand\percentvar[1]{% 例：\percentvar{B}
-  \ensuremath{\varphi_{#1}/\%}%
+% 表格标题: 段前 3pt; 英文表题后 3pt; 固定 14pt 行距
+% 用法: \XtuTableCaption{中文表题}{English caption}
+\newcommand\XtuTableCaption[2]{%
+  \par\vspace{3pt}%
+  \refstepcounter{table}%
+  \begingroup
+    \centering
+    {\XtuTableCaptionCNFont 表\thetable\quad #1\par}%
+    {\XtuTableCaptionENFont Tab.\thetable\quad #2\par}%
+  \endgroup
+  \vspace{3pt}%
 }
 
-% === 8. 表格环境封装（可选，推荐用户直接用 tabular + booktabs）===
-% 若需一键生成规范表格，可定义：
-\newenvironment{xtutable}[1][\linewidth]{%
-  \begin{table}[htbp]
-  \centering
-  \setlength{\tabcolsep}{6pt} % 适度列间距
-  \renewcommand{\arraystretch}{1.2} % 行高微调（配合 14pt 行距）
-  \begin{tabular}{#1}
-}{%
-  \end{tabular}
-  \end{table}
+% 可引用版表格标题: 自动编号并写入 label
+% 用法: \XtuTableCaptionRef{tab:perf}{中文表题}{English caption}
+\newcommand\XtuTableCaptionRef[3]{%
+  \par\vspace{3pt}%
+  \refstepcounter{table}%
+  \label{#1}%
+  \begingroup
+    \centering
+    {\XtuTableCaptionCNFont 表\thetable\quad #2\par}%
+    {\XtuTableCaptionENFont Tab.\thetable\quad #3\par}%
+  \endgroup
+  \vspace{3pt}%
 }
 
-% === 9. 启用对齐：制表位对齐 → 实际通过 column type + \tabcolsep + \arraystretch 实现
-% LaTeX 中“制表位对齐”通常指：数值右对齐、文本左/居中对齐——已由 S/L/C/R 实现
+% 物理量/单位分数形式, 折行时分数线位于上一行末尾
+% 用法: \XtuUnitHeader{e_{ang}}{(^\circ)}
+\newcommand\XtuUnitHeader[2]{%
+  $#1/#2$
+}
 
-% === 10. 兼容双栏模式（自动调整宽度）===
-\AtBeginDocument{%
-  \if@twocolumn
-    \renewcommand{\tabcolsep}{4pt} % 双栏时缩小列距
-  \fi
+% 百分数表示: φ_B/%
+\newcommand\XtuPercentVar[1]{\ensuremath{\varphi_{#1}/\%}}
+\newcommand\percentvar[1]{\XtuPercentVar{#1}}
+
+% 表格主体快捷设置
+\newcommand\XtuTableSetup{%
+  \XtuTableBodyFont
+  \setlength{\tabcolsep}{8pt}%
+  \renewcommand{\arraystretch}{1}%
 }
 
 \endinput
