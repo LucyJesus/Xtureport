@@ -8,7 +8,7 @@
 bash
 ./src/tectonic ./main.tex
 ```
-如果需要添加日志,则加上参数 `--keep-logs`。
+如果需要添加日志,则加上参数 `--keep-logs`.
 
 ## 表格用法(Xtutable)
 
@@ -19,8 +19,8 @@ bash
 ```
 
 命令: `\XtuTableCaptionRef{tab:perf}{中文表题}{English caption}`
-该命令会自动递增表格编号(使用 table 计数器, 不与公式/图片编号冲突), 并写入 label。
-正文引用: `表\ref{tab:perf}`。
+该命令会自动递增表格编号(使用 table 计数器, 不与公式/图片编号冲突), 并写入 label.
+正文引用: `表\ref{tab:perf}`.
 
 5. 分组行示例(DFT/DPMA 与数据同行)
 
@@ -48,30 +48,32 @@ bash
 \usepackage{Xtugraph}
 ```
 
-图片命令会自动编号并可引用(使用 figure 计数器, 与表/公式不冲突), 图片文件优先按你给的路径读取, 若找不到会自动尝试 `imgs/文件名`。
+图片命令会自动编号并可引用(使用 figure 计数器, 与表/公式不冲突), 图片文件优先按你给的路径读取, 若找不到会自动尝试 `imgs/文件名`.
 
-- 单图：\Onegraph[fig:one]{a.png}{中文图题}{English caption}
+- 单图：`\Onegraph[fig:one]{a.png}{中文图题}{English caption}`
 
-- 双图：\Twograph[fig:two]{a.png}{b.png}{中文图题}{English caption}[(a),(b)]
+- 双图：`\Twograph[fig:two]{a.png}{b.png}{中文图题}{English caption}[(a),(b)]`
 
-- 三图：\Threegraph[fig:three]{a.png}{b.png}{c.png}{中文图题}{English caption}[(a),(b),(c)]
+- 三图：`\Threegraph[fig:three]{a.png}{b.png}{c.png}{中文图题}{English caption}[(a),(b),(c)]`
 	
-- 四图：\Fourgraph[fig:four]{a.png}{b.png}{c.png}{d.png}{中文图题}{English caption}[(a),(b),(c),(d)]
+- 四图：`\Fourgraph[fig:four]{a.png}{b.png}{c.png}{d.png}{中文图题}{English caption}[(a),(b),(c),(d)]`
 
-- 五图：\Fivegraph[fig:five]{a.png}{b.png}{c.png}{d.png}{e.png}{中文图题}{English caption}[(a),(b),(c),(d),(e)]
+- 五图：`\Fivegraph[fig:five]{a.png}{b.png}{c.png}{d.png}{e.png}{中文图题}{English caption}[(a),(b),(c),(d),(e)]`
 
 
 说明:
 
-- 多图命令(2~5图)可不写子图标题, 但如果只写 1 个子图标题会报错。
-- 正文引用示例: `见图\ref{fig:three}`。
+- 多图命令(2~5图)可不写子图标题, 但如果只写 1 个子图标题会报错.
+- 正文引用示例: `见图\ref{fig:three}`.
+
 
 ## 杂项
 - 写定义,定理,引理,公理,证明,引理,使用`\Def{},\Thm{},\Axiom{},\Proof{},\lithem{}`
 - 写数字,使用`\XtuNum{123456.987654}`
+- 参考文献放入 `refs.bib` 中.
 
 
 ## 注
 - 本人能力有限,关于英文以及中文之间,全角半角符号的使用,请自行检查.
 - 做图片的陈列时,不得不花费大精力和LaTeX的浮点精度机制斗智斗勇,不得不承认以作者的水平,无法保证图片所放即所得,因此建议在编译后检查图片位置,如果不满意,可以通过调整图片命令的可选参数来微调位置,甚至通过多写点文字的方法改变.
-- 关于封面页,由于学校给出模版没有严格位置参数要求,因此可能需要花时间"反破译"来调整位置,如果急用这个模版,一个可行的方法是照常完成文章其余内容,如何手动在word模版输入封面页的信息,将word保存为pdf,然后将文件保存至同一目录,使用tex的pdfpages包将封面页插入到tex生成的pdf的第一页, 这样就不需要调整tex模版了。
+- 关于封面页,由于学校给出模版没有严格位置参数要求,因此可能需要花时间"反破译"来调整位置,如果急用这个模版,一个可行的方法是照常完成文章其余内容,如何手动在word模版输入封面页的信息,将word保存为pdf,然后将文件保存至同一目录,使用tex的pdfpages包将封面页插入到tex生成的pdf的第一页, 这样就不需要调整tex模版了.
