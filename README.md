@@ -2,19 +2,16 @@
 
 为了不花费宝贵的时间调整word的逆天格式,特此编写这个tex模版,文件夹内word文件即为要求.
 
-本人能力有限,关于英文以及中文之间,全角半角符号的使用,请自行检查.
+***本人能力有限,关于英文以及中文之间,全角半角符号的使用,请自行检查.***
 
 ## 运行
+(此处仅Unix-like系统)
 ```
 bash
 ./src/tectonic-linux.sh ./main.tex
 ```
 如果需要添加日志,则加上参数 `--keep-logs`。
 
-Windows 下运行:
-```bat
-src\tectonic-windows.cmd main.tex
-```
 
 说明: 这里使用的是官方 Tectonic 0.16.9 发行包. Linux 用 `tectonic-0.16.9-x86_64-unknown-linux-gnu.tar.gz`, Windows 用 `tectonic-0.16.9-x86_64-pc-windows-msvc.zip`。
 
