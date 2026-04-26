@@ -7,9 +7,16 @@
 ## 运行
 ```
 bash
-./src/tectonic ./main.tex
+./src/tectonic-linux.sh ./main.tex
 ```
-如果需要添加日志,则加上参数`--keep-logs`
+如果需要添加日志,则加上参数 `--keep-logs`。
+
+Windows 下运行:
+```bat
+src\tectonic-windows.cmd main.tex
+```
+
+说明: 这里使用的是官方 Tectonic 0.16.9 发行包. Linux 用 `tectonic-0.16.9-x86_64-unknown-linux-gnu.tar.gz`, Windows 用 `tectonic-0.16.9-x86_64-pc-windows-msvc.zip`。
 
 ## 表格用法(Xtutable)
 
@@ -62,6 +69,11 @@ bash
 - 多图命令(2~5图)可不写子图标题, 但如果只写 1 个子图标题会报错。
 - 正文引用示例: `见图\ref{fig:three}`。
 
-# 杂项
+## 杂项
 - 写定义,定理,引理,公理,证明,引理,使用`\Def{},\Thm{},\Axiom{},\Proof{},\lithem{}`
-- 写数字,使用`\XtuNum{123.456}`
+- 写数字,使用`\XtuNum{123456.987654}`
+
+
+## 注
+- 做图片的陈列时,不得不花费大精力和LaTeX的浮点精度机制斗智斗勇,不得不承认以作者的水平,无法保证图片所放即所得,因此建议在编译后检查图片位置,如果不满意,可以通过调整图片命令的可选参数来微调位置,甚至通过多写点文字的方法改变.
+- 关于封面页,由于学校给出模版没有严格位置参数要求,因此可能需要花时间"反破译"来调整位置,如果急用这个模版,一个可行的方法是照常完成文章其余内容,如何手动在word模版输入封面页的信息,将word保存为pdf,然后将文件保存至同一目录,使用tex的pdfpages包将封面页插入到tex生成的pdf的第一页, 这样就不需要调整tex模版了。

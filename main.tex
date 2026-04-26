@@ -27,8 +27,20 @@
 \Mainsection{主标题示例 Main Section}
 这里是一段用于测试Mainsection正文样式的文字, 期望效果为五号, 中文宋体, 英文 Times New Roman, 首行缩进 0.74cm, 单倍行距. 同时测试含有数学公式的换行: 设 $E=mc^2$, 当公式与中文混排时也应能自动断行并尽量避免溢出.
 
+随机公式示例:
+\begin{equation}
+\label{eq:energy-balance}
+P = \frac{W}{t}
+\end{equation}
+后文会再次引用这个公式, 用来确认公式编号与引用都正常.
+
 数字分组示例: \XtuNum{123456789.987654}
 
+第二个随机公式:
+\begin{equation}
+\label{eq:quadratic}
+ax^2 + bx + c = 0
+\end{equation}
 \zhlipsum[1]
 
 \Def{度量空间}
@@ -41,6 +53,29 @@
 0，段前段后不空}
 
 \zhlipsum[2]
+
+随机表格示例:
+\begin{table}[htbp]
+\centering
+\XtuTableCaptionRef{tab:random-demo}{随机示例表格}{Random demonstration table}
+\XtuTableSetup
+\begin{tabular}{@{}L C C@{}}
+\toprule
+项目 & 数值 A & 数值 B \\
+\midrule
+甲 & 1.20 & 3.40 \\
+乙 & 5.60 & 7.80 \\
+丙 & 9.00 & 1.23 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+第三个随机公式:
+\begin{equation}
+\label{eq:random}
+f(x) = \int_{-\infty}^{\infty} g(t) e
+^{-2\pi i t x} dt
+\end{equation}
 
 \Thirdsection{表格}
 
@@ -104,6 +139,8 @@ swords words words words words words
 反过来不行
 \Def{开集}
 设 $X$ 是集合 $S$ 的一个子集, 且对于 $S$ 中的任意点 $x\in X$, 都存在一个 $\varepsilon > 0$, 使得 $B(x,\varepsilon) \subseteq X$, 则称 $X$ 是集合 $S$ 上的一个开集。
+
+引用确认: 公式见式(\ref{eq:energy-balance}) (\ref{eq:quadratic}) (\ref{eq:random}), 表格见表\ref{tab:random-demo} \ref{tab:perf}。
 
 \Secondsection{测试用第3部分二级标题}
 WordsWordsWords

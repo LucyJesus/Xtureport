@@ -25,18 +25,29 @@
 % 需求: 123456789.987654 -> 123␠456␠789.987␠654
 % 这里用 0.25\ccwd 作为分组间距(约 1/4 中文字符宽度)。
 \RequirePackage{siunitx}
-\newcommand\tem@NumGroupSep{\kern0.25\ccwd}
+\newdimen\tem@NumGroupSepWidth
+\tem@NumGroupSepWidth=.25em
+\AtBeginDocument{%
+	\tem@NumGroupSepWidth=.25\ccwd
+}
 \sisetup{%
 	mode = text,
 	detect-all,
 	group-digits = all,
-	group-separator = {\tem@NumGroupSep},
+	group-separator = {\kern\tem@NumGroupSepWidth},
 	group-minimum-digits = 4,
 	output-decimal-marker = {.}
 }
 \newcommand\XtuNum[1]{%
 	\begingroup
 	\ifx\tem@TimesLatin\relax\else\tem@TimesLatin\fi
+	\sisetup{%
+		mode = text,
+		group-digits = all,
+		group-separator = {\kern\tem@NumGroupSepWidth},
+		group-minimum-digits = 4,
+		output-decimal-marker = {.}%
+	}%
 	\num{#1}%
 	\endgroup
 }
@@ -134,10 +145,16 @@
 \def\tem@headleft{}
 \def\tem@headcenter{}
 \def\tem@headright{}
+\def\tem@headerreport{实验报告}
+\def\tem@headerschool{}
+\def\tem@headerfirstauthor{}
+\newcommand\temSetFirstAuthor[1]{\def\tem@headerfirstauthor{#1}}
 \newcommand\temSetHeaderContent[3]{%
 	\def\tem@headleft{#1}%
 	\def\tem@headcenter{#2}%
 	\def\tem@headright{#3}%
+	\def\tem@headerreport{#1}%
+	\def\tem@headerschool{#2}%
 }
 \newcommand\temSetHeaderTabStops[2]{%
 	\tem@headtabcenter=#1\relax
@@ -189,16 +206,22 @@
 \newcommand\tem@makeheaderline{%
 	\begingroup
 	\tem@headerfont
-	\makebox[0pt][l]{\tem@headleft}%
-	\hspace*{\tem@headtabcenter}\makebox[0pt][c]{\tem@headcenter}%
-	\hspace*{\dimexpr\tem@headtabright-\tem@headtabcenter\relax}\makebox[0pt][r]{\tem@headright}%
+	\ifnum\value{page}=1\relax
+		\makebox[0pt][l]{\tem@headerreport}%
+		\hspace*{\tem@headtabcenter}\makebox[0pt][c]{\tem@headerschool}%
+		\hspace*{\dimexpr\tem@headtabright-\tem@headtabcenter\relax}\makebox[0pt][r]{第\thepage 页}%
+	\else
+		\makebox[0pt][l]{\tem@headerreport}%
+		\hspace*{\tem@headtabcenter}\makebox[0pt][c]{\tem@headerfirstauthor;第\thesection 节}%
+		\hspace*{\dimexpr\tem@headtabright-\tem@headtabcenter\relax}\makebox[0pt][r]{第\thepage 页}%
+	\fi
 	\endgroup
 }
 
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[L]{\tem@makeheaderline}
-\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0pt}
 
 % 进入文档后再计算版心, 保证 baselineskip/\ccwd 已就绪
@@ -402,11 +425,12 @@
 }
 
 \newcommand\XtuTitleAuthorAddress[6]{%
+	\tem@ifblank{#2}{}{\gdef\tem@headerfirstauthor{#2}}%
 	\temMakeTitleBlockFromArgs{#1}{#2}{#3}{#4}{#5}{#6}%
 }
 
 \newcommand\Zhtitle[1]{\gdef\tem@Zhtitle{#1}}
-\newcommand\Zhauthor[1]{\gdef\tem@Zhauthor{#1}}
+\newcommand\Zhauthor[1]{\gdef\tem@Zhauthor{#1}\gdef\tem@headerfirstauthor{#1}}
 \newcommand\Zhaddress[1]{\gdef\tem@Zhaddress{#1}}
 \newcommand\Entitle[1]{\gdef\tem@Entitle{#1}}
 \newcommand\Enauthor[1]{\gdef\tem@Enauthor{#1}}
