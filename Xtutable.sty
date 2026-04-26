@@ -35,6 +35,19 @@
   \bfseries
 }
 
+% 表题内部实现: 统一中英文两行样式, 可选写入 label
+\newcommand\Xtu@TableCaptionCore[3]{%
+  \par\vspace{3pt}%
+  \refstepcounter{table}%
+  \ifx\relax#1\relax\else\label{#1}\fi
+  \begingroup
+    \centering
+    {\XtuTableCaptionCNFont 表\thetable\quad #2\par}%
+    {\XtuTableCaptionENFont Tab.\thetable\quad #3\par}%
+  \endgroup
+  \vspace{3pt}%
+}
+
 % 表格列类型: 文本列 + 数值列(制表位对齐)
 \newcolumntype{L}{>{\XtuTableBodyFont}l}
 \newcolumntype{C}{>{\XtuTableBodyFont}c}
@@ -52,28 +65,13 @@
 % 表格标题: 段前 3pt; 英文表题后 3pt; 固定 14pt 行距
 % 用法: \XtuTableCaption{中文表题}{English caption}
 \newcommand\XtuTableCaption[2]{%
-  \par\vspace{3pt}%
-  \refstepcounter{table}%
-  \begingroup
-    \centering
-    {\XtuTableCaptionCNFont 表\thetable\quad #1\par}%
-    {\XtuTableCaptionENFont Tab.\thetable\quad #2\par}%
-  \endgroup
-  \vspace{3pt}%
+  \Xtu@TableCaptionCore{\relax}{#1}{#2}%
 }
 
 % 可引用版表格标题: 自动编号并写入 label
 % 用法: \XtuTableCaptionRef{tab:perf}{中文表题}{English caption}
 \newcommand\XtuTableCaptionRef[3]{%
-  \par\vspace{3pt}%
-  \refstepcounter{table}%
-  \label{#1}%
-  \begingroup
-    \centering
-    {\XtuTableCaptionCNFont 表\thetable\quad #2\par}%
-    {\XtuTableCaptionENFont Tab.\thetable\quad #3\par}%
-  \endgroup
-  \vspace{3pt}%
+  \Xtu@TableCaptionCore{#1}{#2}{#3}%
 }
 
 % 物理量/单位分数形式, 折行时分数线位于上一行末尾

@@ -3,7 +3,7 @@
 
 % 说明:
 % - 本类以 ctexart 为基础, 适合中文论文/实验报告.
-% - 这里加载“模板强依赖”的基础宏包, 以减少用户文档重复声明.
+% - 这里加载模板强依赖的基础宏包, 以减少用户文档重复声明.
 
 % 将所有未知选项转交给基础类
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexart}}
@@ -61,36 +61,22 @@
 \RequirePackage{iftex}
 \newcommand\temSetFontDir[1]{\def\tem@fontdir{#1}}
 \temSetFontDir{fonts/}
+\newif\iftem@unicodeengine
+\tem@unicodeenginefalse
+\ifXeTeX
+\tem@unicodeenginetrue
+\RequirePackage{fontspec}
+\fi
+\ifLuaTeX
+\tem@unicodeenginetrue
+\RequirePackage{fontspec}
+\fi
 
 % 说明:
 % - localFile: 放在 \tem@fontdir 下的字体文件名(建议包含扩展名, 如 SimSun.ttf)
 % - systemName: 系统中可识别的字体名(如 SimSun)
 % - 仅在 XeTeX/LuaTeX 下生效(tectonic 通常为 XeTeX).
-\ifXeTeX
-	\RequirePackage{fontspec}
-	\newcommand\temSetMainFontWithFallback[3][]{%
-		\IfFileExists{\tem@fontdir#2}{%
-			\setmainfont[#1,Path=\tem@fontdir]{#2}%
-		}{%
-			\setmainfont[#1]{#3}%
-		}%
-	}
-	\newcommand\temSetSansFontWithFallback[3][]{%
-		\IfFileExists{\tem@fontdir#2}{%
-			\setsansfont[#1,Path=\tem@fontdir]{#2}%
-		}{%
-			\setsansfont[#1]{#3}%
-		}%
-	}
-	\newcommand\temSetMonoFontWithFallback[3][]{%
-		\IfFileExists{\tem@fontdir#2}{%
-			\setmonofont[#1,Path=\tem@fontdir]{#2}%
-		}{%
-			\setmonofont[#1]{#3}%
-		}%
-	}
-\else\ifLuaTeX
-	\RequirePackage{fontspec}
+\iftem@unicodeengine
 	\newcommand\temSetMainFontWithFallback[3][]{%
 		\IfFileExists{\tem@fontdir#2}{%
 			\setmainfont[#1,Path=\tem@fontdir]{#2}%
@@ -123,7 +109,7 @@
 	\newcommand\temSetMonoFontWithFallback[3][]{%
 		\ClassError{tem}{Font fallback requires XeTeX/LuaTeX}{}
 	}
-\fi\fi
+\fi
 
 % 总则: 42 行/页, 每行字数控制
 % 说明:
@@ -159,35 +145,9 @@
 }
 
 % 字体族: 优先 fonts/ 下的字体文件, 否则使用系统字体名
-\ifXeTeX
+\iftem@unicodeengine
 	\newcommand\temSetupHeaderFonts[4]{%
 		% #1 CJK local file, #2 CJK system name, #3 Latin local file, #4 Latin system name
-		\ifdefined\newCJKfontfamily
-			\IfFileExists{\tem@fontdir#1}{%
-				\newCJKfontfamily\tem@HeaderCJK[Path=\tem@fontdir]{#1}%
-			}{%
-				\IfFontExistsTF{#2}{%
-					\newCJKfontfamily\tem@HeaderCJK{#2}%
-				}{%
-					\let\tem@HeaderCJK\relax
-				}%
-			}%
-		\else
-			% 兜底: 如果没有 xeCJK 的字体族接口, 退回到 ctex 默认宋体
-			\let\tem@HeaderCJK\relax
-		\fi
-		\IfFileExists{\tem@fontdir#3}{%
-			\newfontfamily\tem@HeaderLatin[Path=\tem@fontdir]{#3}%
-		}{%
-			\IfFontExistsTF{#4}{%
-				\newfontfamily\tem@HeaderLatin{#4}%
-			}{%
-				\let\tem@HeaderLatin\relax
-			}%
-		}%
-	}
-\else\ifLuaTeX
-	\newcommand\temSetupHeaderFonts[4]{%
 		\ifdefined\newCJKfontfamily
 			\IfFileExists{\tem@fontdir#1}{%
 				\newCJKfontfamily\tem@HeaderCJK[Path=\tem@fontdir]{#1}%
@@ -213,7 +173,7 @@
 	}
 \else
 	\newcommand\temSetupHeaderFonts[4]{}%
-\fi\fi
+\fi
 
 % 默认页眉字体: 宋体 + Times New Roman(优先 fonts/)
 % - 宋体: Windows 常见为 simsun.ttc
@@ -282,7 +242,7 @@
 \makeatletter
 
 % --- 字体族辅助: Latin/CJK 优先本地文件, 否则系统字体 ---
-\ifXeTeX
+\iftem@unicodeengine
 	\newcommand\temNewLatinFamilyWithFallback[3]{%
 		% #1 control sequence, #2 local file, #3 system name
 		\IfFileExists{\tem@fontdir#2}{%
@@ -297,33 +257,6 @@
 	}
 	\newcommand\temNewCJKFamilyWithFallback[3]{%
 		% #1 control sequence, #2 local file, #3 system name
-		\ifdefined\newCJKfontfamily
-			\IfFileExists{\tem@fontdir#2}{%
-				\newCJKfontfamily#1[Path=\tem@fontdir]{#2}%
-			}{%
-				\IfFontExistsTF{#3}{%
-					\newCJKfontfamily#1{#3}%
-				}{%
-					\let#1\relax
-				}%
-			}%
-		\else
-			\let#1\relax
-		\fi
-	}
-\else\ifLuaTeX
-	\newcommand\temNewLatinFamilyWithFallback[3]{%
-		\IfFileExists{\tem@fontdir#2}{%
-			\newfontfamily#1[Path=\tem@fontdir]{#2}%
-		}{%
-			\IfFontExistsTF{#3}{%
-				\newfontfamily#1{#3}%
-			}{%
-				\let#1\relax
-			}%
-		}%
-	}
-	\newcommand\temNewCJKFamilyWithFallback[3]{%
 		\ifdefined\newCJKfontfamily
 			\IfFileExists{\tem@fontdir#2}{%
 				\newCJKfontfamily#1[Path=\tem@fontdir]{#2}%
@@ -341,7 +274,7 @@
 \else
 	\newcommand\temNewLatinFamilyWithFallback[3]{\let#1\relax}
 	\newcommand\temNewCJKFamilyWithFallback[3]{\let#1\relax}
-\fi\fi
+\fi
 
 % 预设字体族(找不到就 \relax)
 % 英文字体文件名按 Windows 常见: times.ttf / arial.ttf
@@ -564,24 +497,26 @@
 \RequirePackage{etoolbox}
 \newif\iftem@maintextactive
 \newif\iftem@appendixmode
+\newif\iftem@appendixfirstsection
 \newif\iftem@tocwasdoublecol
 \tem@appendixmodefalse
+\tem@appendixfirstsectionfalse
 \newtoks\tem@MainSavedEverypar
 
 % 目录页优先占满整页: 在双栏文档中临时切到单栏, 目录后恢复双栏。
 \let\tem@OldTableofcontents\tableofcontents
 \renewcommand\tableofcontents{%
-\t\clearpage
-\t\tem@tocwasdoublecolfalse
-\t\if@twocolumn
-\t\t\tem@tocwasdoublecoltrue
-\t\t\onecolumn
-\t\fi
-\t\tem@OldTableofcontents
-\t\clearpage
-\t\iftem@tocwasdoublecol
-\t\t\twocolumn
-\t\fi
+\clearpage
+\tem@tocwasdoublecolfalse
+\if@twocolumn
+\tem@tocwasdoublecoltrue
+\onecolumn
+\fi
+\tem@OldTableofcontents
+\clearpage
+\iftem@tocwasdoublecol
+\twocolumn
+\fi
 }
 
 % 附录统一行为:
@@ -589,13 +524,13 @@
 % - 附录整体使用单栏(与正文双栏区分)
 \let\tem@OldAppendix\appendix
 \renewcommand\appendix{%
-\t\if@twocolumn
-\t\t\onecolumn
-\t\else
-\t\t\clearpage
-\t\fi
-\t\tem@appendixmodetrue
-\t\tem@OldAppendix
+\clearpage
+\if@twocolumn
+\onecolumn
+\fi
+\tem@appendixmodetrue
+\tem@appendixfirstsectiontrue
+\tem@OldAppendix
 }
 
 \newcommand\tem@MainTextParaSetup{%
@@ -643,7 +578,11 @@
 \newcommand\tem@Mainsection[1]{%
 	\par
 	\iftem@appendixmode
-		\clearpage
+\iftem@appendixfirstsection
+\global\tem@appendixfirstsectionfalse
+\else
+\clearpage
+\fi
 	\fi
 	\temMainTextDeactivate
 	\refstepcounter{section}%
@@ -657,7 +596,7 @@
 \newcommand\tem@MainsectionStar[1]{%
 	\par
 	\iftem@appendixmode
-		\clearpage
+\clearpage
 	\fi
 	\temMainTextDeactivate
 	\tem@MainsectionTitle{#1}%
@@ -774,6 +713,17 @@
 \RequirePackage{algorithm}
 \RequirePackage{algorithmic}
 % \RequirePackage[ruled,vlined]{algorithm2e}
+
+% 参考文献标题: 左对齐顶格, 小四黑体
+\AtBeginDocument{%
+	\@ifundefined{bibsection}{}{%
+		\renewcommand{\bibsection}{%
+			\par
+			\noindent
+			{\zihao{-4}\heiti 参考文献\par}%
+		}%
+	}%
+}
 
 % 代码
 \RequirePackage{xcolor}
