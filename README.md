@@ -49,11 +49,16 @@ bash
 ```
 
 图片命令会自动编号并可引用(使用 figure 计数器, 与表/公式不冲突), 图片文件优先按你给的路径读取, 若找不到会自动尝试 `imgs/文件名`。
-单图：\Onegraph[fig:one]{a.png}{中文图题}{English caption}
-双图：\Twograph[fig:two]{a.png}{b.png}{中文图题}{English caption}[(a),(b)]
-三图：\Threegraph[fig:three]{a.png}{b.png}{c.png}{中文图题}{English caption}[(a),(b),(c)]
-四图：\Fourgraph[fig:four]{a.png}{b.png}{c.png}{d.png}{中文图题}{English caption}[(a),(b),(c),(d)]
-五图：\Fivegraph[fig:five]{a.png}{b.png}{c.png}{d.png}{e.png}{中文图题}{English caption}[(a),(b),(c),(d),(e)]
+
+- 单图：\Onegraph[fig:one]{a.png}{中文图题}{English caption}
+
+- 双图：\Twograph[fig:two]{a.png}{b.png}{中文图题}{English caption}[(a),(b)]
+
+- 三图：\Threegraph[fig:three]{a.png}{b.png}{c.png}{中文图题}{English caption}[(a),(b),(c)]
+	
+- 四图：\Fourgraph[fig:four]{a.png}{b.png}{c.png}{d.png}{中文图题}{English caption}[(a),(b),(c),(d)]
+
+- 五图：\Fivegraph[fig:five]{a.png}{b.png}{c.png}{d.png}{e.png}{中文图题}{English caption}[(a),(b),(c),(d),(e)]
 
 
 说明:
