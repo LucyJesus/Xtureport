@@ -6,7 +6,7 @@
 (此处仅Unix-like系统)
 ```
 bash
-./src/tectonic ./main.tex
+tectonic ./main.tex
 ```
 如果需要添加日志,则加上参数 `--keep-logs`.
 
