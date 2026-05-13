@@ -18,7 +18,7 @@
 
 % 行距控制: 使用 setspace 的 \setstretch 来统一调整 \baselineskip
 % 说明: \linespread 也能工作, 但 setspace 在局部/全局控制上更直观,
-%      且便于按 Word 的“倍数行距”思路调整。
+%      且便于按 Word 的"倍数行距"思路调整。
 \RequirePackage{setspace}
 
 % 数字分组(千分位/小数分组): 使用 siunitx
@@ -65,7 +65,7 @@
 	footskip=0pt
 }
 
-% 避免为了“齐底”拉伸段间空白, 导致页面中间出现大空行
+% 避免为了"齐底"拉伸段间空白, 导致页面中间出现大空行
 \raggedbottom
 
 % 字体: 优先使用项目 fonts/ 目录, 否则回退到系统字体
@@ -124,7 +124,7 @@
 
 % 总则: 42 行/页, 每行字数控制
 % 说明:
-% - 这里用 \ccwd(中文字符宽度)估算“每行字数”. 实际效果会受字体与标点影响.
+% - 这里用 \ccwd(中文字符宽度)估算"每行字数". 实际效果会受字体与标点影响.
 % - 单栏按 45 字/行设置版心宽度.
 % - 双栏按每栏 21 字设置版心宽度(总宽度=2*21*\ccwd+栏间距).
 \newcommand\temSetLinesPerPage[1]{\def\tem@linesperpage{#1}}
@@ -227,8 +227,8 @@
 	\newdimen\tem@textwidth
 	\newdimen\tem@textheight
 
-	% 版心按“正文默认字号/行距”估算, 这样 42 行/页 与每行字数的设定更稳定。
-	% 这里取正文常用的“五号 + 单倍行距(\setstretch{1})”。
+	% 版心按"正文默认字号/行距"估算, 这样 42 行/页 与每行字数的设定更稳定。
+	% 这里取正文常用的"五号 + 单倍行距(\setstretch{1})"。
 	\begingroup
 		\zihao{5}% 五号
 		\setstretch{1}% 单倍行距
@@ -360,7 +360,7 @@
 \def\tem@Enauthor{}
 \def\tem@Enaddress{}
 
-% 统一接口: 一次性输出“中英文标题/作者/地址”标题块
+% 统一接口: 一次性输出"中英文标题/作者/地址"标题块
 % 用法: \XtuTitleAuthorAddress{中标题}{中作者}{中文地址}{英标题}{英作者}{英地址}
 % 约定: 任一参数为空则忽略该行; 标题块整体单倍行距
 \newcommand\tem@titleblockcontentargs[6]{%
@@ -496,7 +496,7 @@
 % 主标题节: \Mainsection{} 代替 \section{}
 % 规范:
 % - 标题(二级标题): 小四黑, 英文 Arial, 上下间距各 6pt
-% - 标题后的正文直到“下一个命令”出现前: 五号宋体/Times New Roman, 首行缩进 0.74cm,
+% - 标题后的正文直到"下一个命令"出现前: 五号宋体/Times New Roman, 首行缩进 0.74cm,
 %   单倍行距; 尽量改善中文断行与公式导致的溢出
 \RequirePackage{etoolbox}
 \newif\iftem@maintextactive
@@ -611,7 +611,7 @@
 % 约定:
 % - 编号: 跟随 \Mainsection 的阿拉伯数字, 形如 1.1, 1.2, 3.4 ...
 % - 标题字体: 五号黑体(中文) + Arial(英文)
-% - 标题后的正文直到“下一个结构命令”前: 使用 Mainsection 同款正文样式
+% - 标题后的正文直到"下一个结构命令"前: 使用 Mainsection 同款正文样式
 \newcommand\tem@SecondsectionTitle[1]{%
 	\par
 	\noindent
@@ -633,7 +633,7 @@
 % - 编号: 跟随 \Mainsection/\Secondsection, 形如 1.1.1, 1.2.1, 3.1.4 ...
 % - 标题字体: 五号宋体(中文) + Times New Roman(英文)
 % - 与正文段落紧贴: 不额外增加段前/段后间距
-% - 标题后的正文直到“下一个结构命令”前: 使用 Mainsection 同款正文样式
+% - 标题后的正文直到"下一个结构命令"前: 使用 Mainsection 同款正文样式
 \newcommand\tem@ThirdsectionTitle[1]{%
 	\par
 	\noindent
@@ -654,7 +654,7 @@
 
 % 数学语句块: \Def/\Thm/\Axiom/\Lithem/\Proof
 % 约定:
-% - 调用后先输出一行“顶格五号黑体”标题(可含中英文), 然后切换到正文样式
+% - 调用后先输出一行"顶格五号黑体"标题(可含中英文), 然后切换到正文样式
 % - 正文样式持续到下一个常见结构命令出现(由 temMainTextDeactivate 的钩子负责)
 % - Def/Thm/Axiom/Lithem 各自独立编号: 1,2,3...
 \newcounter{tem@def}
@@ -734,5 +734,151 @@
 \RequirePackage{listings}
 
 % 这里先不强行定义 listings 风格, 避免与用户/学校规范冲突.
+
+%% ============================================================
+%% 封面页
+%% 用法示例:
+%%   \XtuAddMember{姓名}{班级}{学号}{联系电话}{E-mail}
+%%   \XtuAddMember{...}  % 重复调用添加更多成员
+%%   \XtuMakeCover[subject={题目}, course={课程}, teacher={教师},
+%%                 score={}, date={2026年5月}]
+%%
+%% \XtuMakeCover 支持的 key (均有默认值, 可省略):
+%%   title   = {湘潭大学}
+%%   school  = {数学与计算科学学院}
+%%   type    = {课程报告}
+%%   subject, course, teacher, score, date
+%% ============================================================
+
+\RequirePackage{pgfkeys}
+
+%% --- 内部存储 ---
+\def\tem@cv@title{湘潭大学}
+\def\tem@cv@school{数学与计算科学学院}
+\def\tem@cv@type{课程报告}
+\def\tem@cv@subject{}
+\def\tem@cv@course{}
+\def\tem@cv@teacher{}
+\def\tem@cv@score{}
+\def\tem@cv@date{}
+\newif\iftem@cv@wastwocol
+\newcount\tem@cv@membercount
+\tem@cv@membercount=0
+
+%% --- pgfkeys ---
+\pgfkeys{
+  /XtuCover/.is family,
+  /XtuCover,
+  title/.store   in = \tem@cv@title,
+  school/.store  in = \tem@cv@school,
+  type/.store    in = \tem@cv@type,
+  subject/.store in = \tem@cv@subject,
+  course/.store  in = \tem@cv@course,
+  teacher/.store in = \tem@cv@teacher,
+  score/.store   in = \tem@cv@score,
+  date/.store    in = \tem@cv@date,
+}
+
+%% --- 添加成员命令(在 \XtuMakeCover 之前重复调用) ---
+%% \XtuAddMember{姓名}{班级}{学号}{联系电话}{E-mail}
+\newcommand\XtuAddMember[5]{%
+  \global\advance\tem@cv@membercount by 1\relax
+  \expandafter\gdef\csname tem@cv@m\the\tem@cv@membercount @name\endcsname{#1}%
+  \expandafter\gdef\csname tem@cv@m\the\tem@cv@membercount @class\endcsname{#2}%
+  \expandafter\gdef\csname tem@cv@m\the\tem@cv@membercount @id\endcsname{#3}%
+  \expandafter\gdef\csname tem@cv@m\the\tem@cv@membercount @phone\endcsname{#4}%
+  \expandafter\gdef\csname tem@cv@m\the\tem@cv@membercount @email\endcsname{#5}%
+}
+
+%% --- 信息字段行: label + 下划线填满 ---
+\newcommand\tem@cv@inforow[2]{%
+  \par\vspace{6pt}%
+  \noindent
+  \begingroup
+    \zihao{-4}%
+    \ifx\tem@HeiCJK\relax\heiti\else\tem@HeiCJK\fi
+    \makebox[5em][l]{#1：}%
+    \underline{%
+      \hbox to \dimexpr\textwidth-5em\relax{%
+        \hspace{4pt}%
+        \ifx\tem@SongCJK\relax\songti\else\tem@SongCJK\fi
+        \ifx\tem@TimesLatin\relax\else\tem@TimesLatin\fi
+        #2\hfill
+      }%
+    }%
+  \endgroup\par
+}
+
+%% --- 输出一行成员数据(遍历1..membercount) ---
+\newcommand\tem@cv@rowdata[1]{%
+  \newcount\tem@cv@i
+  \tem@cv@i=1\relax
+  \loop\ifnum\tem@cv@i>\tem@cv@membercount\else
+    & \csname tem@cv@m\the\tem@cv@i @#1\endcsname
+    \advance\tem@cv@i by 1\relax
+  \repeat
+}
+
+%% --- 成员表格 ---
+\newcommand\tem@cv@membertable{%
+  \def\tem@cv@colspec{|l|}%
+  \newcount\tem@cv@j
+  \tem@cv@j=1\relax
+  \loop\ifnum\tem@cv@j>\tem@cv@membercount\else
+    \g@addto@macro\tem@cv@colspec{c|}%
+    \advance\tem@cv@j by 1\relax
+  \repeat
+  \begingroup
+    \zihao{5}%
+    \ifx\tem@SongCJK\relax\songti\else\tem@SongCJK\fi
+    \ifx\tem@TimesLatin\relax\else\tem@TimesLatin\fi
+    \renewcommand\arraystretch{1.5}%
+    \noindent
+    \expandafter\begin\expandafter{tabular}\expandafter{\tem@cv@colspec}%
+    \hline
+    {\ifx\tem@HeiCJK\relax\heiti\else\tem@HeiCJK\fi 组员姓名}\tem@cv@rowdata{name}\\  \hline
+    {\ifx\tem@HeiCJK\relax\heiti\else\tem@HeiCJK\fi 班\quad 级}\tem@cv@rowdata{class}\\ \hline
+    {\ifx\tem@HeiCJK\relax\heiti\else\tem@HeiCJK\fi 学\quad 号}\tem@cv@rowdata{id}\\   \hline
+    {\ifx\tem@HeiCJK\relax\heiti\else\tem@HeiCJK\fi 联系电话}\tem@cv@rowdata{phone}\\  \hline
+    {\ifx\tem@HeiCJK\relax\heiti\else\tem@HeiCJK\fi E-mail}\tem@cv@rowdata{email}\\    \hline
+    \end{tabular}%
+  \endgroup
+}
+
+%% --- 主命令 ---
+\newcommand\XtuMakeCover[1][]{%
+  \pgfkeys{/XtuCover, #1}%
+  \tem@cv@wastwocolfalse
+  \if@twocolumn\tem@cv@wastwocoltrue\onecolumn\fi
+  \clearpage
+  \thispagestyle{empty}%
+  \setcounter{page}{0}%
+  \noindent\begin{minipage}[t][\textheight][s]{\textwidth}
+    \begingroup
+      \centering\setstretch{1.8}%
+      {\zihao{0}\bfseries\ifx\tem@HeiCJK\relax\heiti\else\tem@HeiCJK\fi\tem@cv@title\par}%
+      {\zihao{2}\bfseries\ifx\tem@HeiCJK\relax\heiti\else\tem@HeiCJK\fi\tem@cv@school\par}%
+      {\zihao{2}\bfseries\ifx\tem@HeiCJK\relax\heiti\else\tem@HeiCJK\fi\tem@cv@type\par}%
+    \endgroup
+    \vspace{2.5cm}%
+    \tem@cv@inforow{题\quad 目}{\tem@cv@subject}%
+    \tem@cv@inforow{课\quad 程}{\tem@cv@course}%
+    \tem@cv@inforow{指导教师}{\tem@cv@teacher}%
+    \tem@cv@inforow{成\quad 绩}{\tem@cv@score}%
+    \vspace{1cm}%
+    \ifnum\tem@cv@membercount>0\relax
+      \tem@cv@membertable
+    \fi
+    \vfill
+    \begin{center}
+      \zihao{-4}%
+      \ifx\tem@SongCJK\relax\songti\else\tem@SongCJK\fi
+      完成日期：\tem@cv@date
+    \end{center}
+  \end{minipage}%
+  \clearpage
+  \iftem@cv@wastwocol\twocolumn\fi
+  \global\tem@cv@membercount=0\relax
+}
 
 \endinput
