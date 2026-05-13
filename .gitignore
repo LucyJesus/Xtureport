@@ -13,3 +13,9 @@
 
 # iCloud
 *.icloud
+
+*.blg
+*.log
+*.aux
+*.bbl
+*.out

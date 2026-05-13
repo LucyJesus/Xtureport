@@ -136,23 +136,16 @@
 
 % 页眉: 小五号宋体, 英文 Times New Roman
 \RequirePackage{fancyhdr}
-\makeatletter
 \newdimen\tem@headtabcenter
 \newdimen\tem@headtabright
 \tem@headtabcenter=8.5cm\relax
 \tem@headtabright=16.8cm\relax
 
-\def\tem@headleft{}
-\def\tem@headcenter{}
-\def\tem@headright{}
 \def\tem@headerreport{实验报告}
 \def\tem@headerschool{}
 \def\tem@headerfirstauthor{}
 \newcommand\temSetFirstAuthor[1]{\def\tem@headerfirstauthor{#1}}
 \newcommand\temSetHeaderContent[3]{%
-	\def\tem@headleft{#1}%
-	\def\tem@headcenter{#2}%
-	\def\tem@headright{#3}%
 	\def\tem@headerreport{#1}%
 	\def\tem@headerschool{#2}%
 }
@@ -251,7 +244,6 @@
 
 	\geometry{textwidth=\tem@textwidth,textheight=\tem@textheight}%
 }
-\makeatother
 
 % 标题块(跨栏): \Zhtitle 后紧跟 \Zhauthor/\Zhaddress/\Entitle/\Enauthor/\Enaddress
 % 规范:
@@ -262,7 +254,6 @@
 % - \Enauthor: 五号 Times New Roman
 % - \Enaddress: 小五 Times New Roman
 % 字体来源: 优先 fonts/ 目录的字体文件, 否则回退系统字体名; 都找不到则用 ctex/默认字体, 不报错.
-\makeatletter
 
 % --- 字体族辅助: Latin/CJK 优先本地文件, 否则系统字体 ---
 \iftem@unicodeengine
@@ -369,46 +360,37 @@
 \def\tem@Enauthor{}
 \def\tem@Enaddress{}
 
-% 判空工具: 参数为空则执行 #2, 否则执行 #3
-\newcommand\tem@ifblank[3]{%
-	\if\relax\detokenize{#1}\relax
-		#2%
-	\else
-		#3%
-	\fi
-}
-
 % 统一接口: 一次性输出“中英文标题/作者/地址”标题块
 % 用法: \XtuTitleAuthorAddress{中标题}{中作者}{中文地址}{英标题}{英作者}{英地址}
 % 约定: 任一参数为空则忽略该行; 标题块整体单倍行距
 \newcommand\tem@titleblockcontentargs[6]{%
-	\tem@ifblank{#1#2#3#4#5#6}{}{%
+	\ifstrempty{#1#2#3#4#5#6}{}{%
 		\par\vspace{12pt}% 段前 12pt
 		\begingroup
 			\setstretch{1}% 标题块整体单倍行距
 			\centering
 			% 中文标题: 二号黑体 + 英文 Arial
-			\tem@ifblank{#1}{}{%
+			\ifstrempty{#1}{}{%
 				{\zihao{2}\heiti\ifx\tem@ArialLatin\relax\else\tem@ArialLatin\fi #1\par}%
 			}%
 			% 中文作者: 四号仿宋
-			\tem@ifblank{#2}{}{%
+			\ifstrempty{#2}{}{%
 				{\zihao{4}\ifx\tem@FangSongCJK\relax\fangsong\else\tem@FangSongCJK\fi #2\par}%
 			}%
 			% 中文单位/地址: 五号楷体
-			\tem@ifblank{#3}{}{%
+			\ifstrempty{#3}{}{%
 				{\zihao{5}\ifx\tem@KaiTiCJK\relax\kaishu\else\tem@KaiTiCJK\fi #3\par}%
 			}%
 			% 英文标题: 小四 Times New Roman 加粗
-			\tem@ifblank{#4}{}{%
+			\ifstrempty{#4}{}{%
 				{\zihao{-4}\bfseries\ifx\tem@TimesLatin\relax\else\tem@TimesLatin\fi #4\par}%
 			}%
 			% 英文作者: 五号 Times New Roman
-			\tem@ifblank{#5}{}{%
+			\ifstrempty{#5}{}{%
 				{\zihao{5}\ifx\tem@TimesLatin\relax\else\tem@TimesLatin\fi #5\par}%
 			}%
 			% 英文单位/地址: 小五 Times New Roman
-			\tem@ifblank{#6}{}{%
+			\ifstrempty{#6}{}{%
 				{\zihao{-5}\ifx\tem@TimesLatin\relax\else\tem@TimesLatin\fi #6\par}%
 			}%
 		\endgroup
@@ -425,7 +407,7 @@
 }
 
 \newcommand\XtuTitleAuthorAddress[6]{%
-	\tem@ifblank{#2}{}{\gdef\tem@headerfirstauthor{#2}}%
+	\ifstrempty{#2}{}{\gdef\tem@headerfirstauthor{#2}}%
 	\temMakeTitleBlockFromArgs{#1}{#2}{#3}{#4}{#5}{#6}%
 }
 
@@ -461,8 +443,6 @@
 		\temMakeTitleBlock
 	\fi
 }
-
-% \makeatother
 
 % 摘要/关键词
 % 约定:
@@ -685,13 +665,13 @@
 \newcommand\tem@StmtHeadingNoNum[2]{%
 	\par
 	\noindent
-	{\zihao{5}\heiti\ifx\tem@ArialLatin\relax\else\tem@ArialLatin\fi #1\tem@ifblank{#2}{}{：#2}\par}%
+	{\zihao{5}\heiti\ifx\tem@ArialLatin\relax\else\tem@ArialLatin\fi #1\ifstrempty{#2}{}{：#2}\par}%
 }
 
 \newcommand\tem@StmtHeadingWithNum[3]{%
 	\par
 	\noindent
-	{\zihao{5}\heiti\ifx\tem@ArialLatin\relax\else\tem@ArialLatin\fi #1\arabic{#2}\tem@ifblank{#3}{}{：#3}\par}%
+	{\zihao{5}\heiti\ifx\tem@ArialLatin\relax\else\tem@ArialLatin\fi #1\arabic{#2}\ifstrempty{#3}{}{：#3}\par}%
 }
 
 \newcommand\Def[1]{%
@@ -755,5 +735,4 @@
 
 % 这里先不强行定义 listings 风格, 避免与用户/学校规范冲突.
 
-\makeatother
 \endinput
